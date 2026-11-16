@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sesha Sai Jagadeswar Patnala, robotics notebook</title>
+<meta name="description" content="Portfolio of Sesha Sai Jagadeswar Patnala (PSSJ), a validation-first robotics engineer in Hyderabad: a 12-joint quadruped validated milestone by milestone in simulation, a Nav2 mobile robot built at ISRO NRSC, and simulation and control models for the HOP ALPHA VTVL demonstrator.">
+<meta name="author" content="Sesha Sai Jagadeswar Patnala">
+<meta name="theme-color" content="#111111">
+<link rel="canonical" href="https://robovision2210.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sesha Sai Jagadeswar Patnala, robotics notebook">
+<meta property="og:description" content="Evidence first. Claims second. A robotics engineering notebook with a validation ledger, anatomy plates and stated limits.">
+<meta property="og:url" content="https://robovision2210.github.io/">
+<meta property="og:image" content="https://robovision2210.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Evidence first. Claims second. PSSJ robotics notebook.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23111'/%3E%3Cg fill='none' stroke='%23f3f3f3' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 30h36v10H14z'/%3E%3Cpath d='M20 40l-6 9 7 5M44 40l-6 9 7 5'/%3E%3Cpath d='M27 30v-6h10v6'/%3E%3Cpath d='M32 22C40 14 48 12 54 13' stroke-dasharray='2 5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Sesha Sai Jagadeswar Patnala","alternateName":"PSSJ","url":"https://robovision2210.github.io/","email":"mailto:pssjagadeswar22@gmail.com","jobTitle":"Associate Mechatronics Engineer","worksFor":{"@type":"Organization","name":"Abyom SpaceTech and Defence"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Hindustan Institute of Technology and Science"},"address":{"@type":"PostalAddress","addressLocality":"Hyderabad","addressCountry":"IN"},"sameAs":["https://github.com/robovision2210","https://www.linkedin.com/in/sesha-sai-jagadeswar-patnala-3b6934249/"],"knowsAbout":["Robotics","ROS 2","Nav2","Legged locomotion","Simulation","Flight control"]}
+</script>
+<style>
+/* ---------------------------------------------------------------- tokens
+   Layout idea: a notebook page. A narrow left margin rail carries sheet
+   numbers and pencil notes; one reading column sits beside it; plates and
+   galleries use the full column. Strictly black, white and greys. */
+:root{
+  --paper:#111111; --paper2:#191919; --ink:#f3f3f3; --graphite:#c2c2c2; --faint:#8f8f8f; --rule:#4c4c4c;
+  --grid:rgba(255,255,255,.05); --grid2:rgba(255,255,255,.085); --tape:rgba(255,255,255,.22);
+  --inv:#f3f3f3; --inv-ink:#111111; --photo:#ececec; --photo-ink:#151515; --shadow:rgba(0,0,0,.55);
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  --cur:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M3 25l2-7L19 4l5 5L10 23z' fill='%23fff' stroke='%23111' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M5 18l5 5M16 7l5 5' fill='none' stroke='%23111' stroke-width='1.3'/%3E%3Cpath d='M3 25l1.3-4.2 2.9 2.9z' fill='%23111'/%3E%3C/svg%3E") 3 25;
+  --cur2:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='4' cy='24' r='3.4' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3Ccircle cx='4' cy='24' r='3.4' fill='none' stroke='%23111' stroke-width='1'/%3E%3Cpath d='M6 22l1-4L19 6l4 4L11 22z' fill='%23111' stroke='%23fff' stroke-width='1.4' stroke-linejoin='round'/%3E%3C/svg%3E") 4 24;
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --paper:#f4f4f4; --paper2:#e9e9e9; --ink:#111111; --graphite:#3a3a3a; --faint:#5c5c5c; --rule:#a3a3a3;
+  --grid:rgba(0,0,0,.055); --grid2:rgba(0,0,0,.10); --tape:rgba(0,0,0,.16);
+  --inv:#111111; --inv-ink:#f4f4f4; --photo:#ffffff; --photo-ink:#151515; --shadow:rgba(0,0,0,.22);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background-color:var(--paper);color:var(--ink);font:400 16px/1.62 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px);
+  background-size:24px 24px,24px 24px,120px 120px,120px 120px;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:3;opacity:.55;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .5  0 0 0 0 .5  0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@media (pointer:fine){html{cursor:var(--cur),auto} a,button,summary,label,[role="button"],.clk{cursor:var(--cur2),pointer} input,textarea{cursor:text}}
+img,svg,video{max-width:100%}
+a{color:inherit;text-decoration-thickness:1.5px;text-underline-offset:3px}
+a:hover{text-decoration-style:wavy}
+:focus-visible{outline:2px dashed var(--ink);outline-offset:3px}
+h1,h2,h3,h4{font-family:var(--f-body);text-wrap:balance;margin:0}
+p{margin:0 0 1em;max-width:70ch}
+.mono{font-family:var(--f-mono);font-size:.82rem;letter-spacing:.01em}
+.hand{font-family:var(--f-hand);font-size:1.4rem;line-height:1.12;font-weight:500}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,44px)}
+.skip{position:absolute;left:12px;top:-60px;background:var(--inv);color:var(--inv-ink);padding:10px 14px;z-index:60;font:600 14px var(--f-mono)}
+.skip:focus{top:10px}
+
+/* sketch border: only the pseudo-element is displaced, never the text */
+.sk{position:relative}
+.sk::before{content:"";position:absolute;inset:0;border:1.6px solid var(--ink);border-radius:3px 9px 4px 8px/8px 3px 9px 4px;filter:url(#wob);pointer-events:none}
+.sk.dash::before{border-style:dashed}
+.sk>*{position:relative}
+
+/* ---------------------------------------------------------------- header */
+.draft{background:var(--inv);color:var(--inv-ink);font:500 12.5px/1.4 var(--f-mono);padding:7px 0;position:relative;z-index:5}
+.draft a{font-weight:700}
+.top{position:sticky;top:0;z-index:40;background:var(--paper);background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+.top .wrap{max-width:1560px}
+.top-in{display:flex;align-items:center;gap:14px;min-height:54px}
+.mark{font:800 17px/1 var(--f-body);letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.mark svg{width:26px;height:26px}
+.sheets{display:flex;gap:2px;flex:1;flex-wrap:nowrap;overflow:hidden;margin-left:6px}
+.sheets a{font:500 12px/1 var(--f-mono);text-decoration:none;padding:9px 6px;white-space:nowrap;color:var(--graphite);border-bottom:2px solid transparent}
+.sheets a:hover,.sheets a[aria-current="true"]{color:var(--ink);border-bottom-color:var(--ink)}
+.tools{display:flex;align-items:center;gap:8px;margin-left:auto}
+.tbtn{font:600 12px/1 var(--f-mono);background:transparent;color:var(--ink);border:1.5px solid var(--ink);padding:8px 9px;border-radius:2px 6px 3px 5px;white-space:nowrap}
+.tbtn:hover,.tbtn[aria-pressed="true"]{background:var(--inv);color:var(--inv-ink)}
+.tbtn kbd,.btn kbd{font:inherit;border:1px solid currentColor;padding:0 4px;margin-left:4px}
+@media (pointer:coarse){.btn kbd,.tbtn kbd{display:none}}
+.menu-btn{display:none}
+@media (max-width:1419px){
+  .sheets{display:none;position:absolute;left:0;right:0;top:100%;background:var(--paper);border-bottom:1px solid var(--rule);padding:8px clamp(16px,4vw,44px) 14px;flex-wrap:wrap;gap:4px 6px}
+  .sheets.open{display:flex}
+  .menu-btn{display:inline-block}
+}
+@media (max-width:560px){.tbtn .lbl{display:none}.tbtn.term{display:none}}
+
+/* ---------------------------------------------------------------- hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.hero-in{padding-top:clamp(22px,3.6vw,46px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(12px,3vw,48px);align-items:end;padding-bottom:clamp(20px,3vw,36px)}
+.hero-note{display:inline-block;transform:rotate(-1.6deg);margin:0 0 8px 4px;color:var(--ink);font-size:clamp(1.3rem,2.1vw,1.85rem);line-height:1.1}
+.hero-sub b{font-weight:700;color:var(--ink)}
+.hero h1{font-weight:900;font-size:clamp(40px,11.6vw,156px);line-height:.88;letter-spacing:-.052em;margin:0 0 .16em -.04em}
+@supports not (-webkit-text-stroke:1px black){.hero h1 .l2{color:var(--faint)}}
+.hero h1 span{display:block}
+.hero h1 .l2{color:transparent;-webkit-text-stroke:clamp(1.4px,.22vw,2.6px) var(--ink);letter-spacing:-.034em}
+.hero-sub{font-size:clamp(16px,1.45vw,19px);line-height:1.55;color:var(--graphite);max-width:60ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 0}
+.btn{display:inline-block;font:600 14px/1 var(--f-mono);text-decoration:none;padding:14px 16px;color:var(--ink);background:transparent;border:0;position:relative;transition:transform .18s ease-out}
+.btn::before{content:"";position:absolute;inset:0;border:1.8px solid var(--ink);border-radius:3px 10px 4px 8px/9px 3px 10px 4px;filter:url(#wob2);pointer-events:none}
+.btn.solid{background:var(--inv);color:var(--inv-ink)}
+.btn:hover{text-decoration:none;background:var(--inv);color:var(--inv-ink)}
+.btn.solid:hover{background:transparent;color:var(--ink)}
+.hero-art{position:relative;margin-top:-6%}
+.hero-art svg{display:block;width:100%;height:auto;overflow:visible}
+.hero-art .scr{position:absolute;right:0;top:-3%;transform:rotate(3deg);color:var(--graphite);max-width:15ch;text-align:right}
+.ln{fill:none;stroke:var(--ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ln.thin{stroke-width:1.2}.ln.dashd{stroke-dasharray:5 6}.ln.gr{stroke:var(--faint)}
+.fillp{fill:var(--paper)}
+.svgt{font:500 12px var(--f-mono);fill:var(--graphite)}.svgt.b{fill:var(--ink);font-weight:700}.svgh{font:500 21px var(--f-hand);fill:var(--graphite)}
+.js .asm .ln{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s cubic-bezier(.6,.1,.3,1) forwards;animation-delay:calc(var(--i,0)*90ms + 250ms)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.beam{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;z-index:2;opacity:0}
+.beam.on{opacity:1}
+.beam i{position:absolute;left:-1px;bottom:0;width:2px;height:150vmax;background:linear-gradient(to top,var(--ink),transparent 85%);transform-origin:50% 100%}
+.beam b{position:absolute;left:-150vmax;top:-150vmax;width:300vmax;height:300vmax;border-radius:50%;opacity:.5}
+.hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid var(--rule)}
+.stat{padding:18px 18px 20px 0;border-right:1px dashed var(--rule)}
+.stat+.stat{padding-left:18px}.stat:last-child{border-right:0}
+.num{font:700 clamp(24px,3.1vw,42px)/1 var(--f-mono);letter-spacing:-.03em;font-variant-numeric:tabular-nums;display:block;white-space:nowrap}
+.num small{font-size:.5em;font-weight:500;letter-spacing:0}
+.stat .l{display:block;font-weight:600;font-size:.92rem;margin-top:8px;line-height:1.3}
+.stat .s{display:block;font:400 12px/1.4 var(--f-mono);color:var(--faint);margin-top:3px}
+@media (max-width:900px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-art{margin-top:0;max-width:520px}.hero-art .scr{position:static;display:block;max-width:none;text-align:left;transform:rotate(-1.5deg);margin:6px 0 0 4px}.hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat{border-bottom:1px dashed var(--rule)}.stat:nth-child(2n){border-right:0}.stat:nth-child(2n+1){padding-left:0}}
+
+/* ---------------------------------------------------------------- sheets */
+.scrollpath{position:fixed;left:clamp(4px,1.1vw,18px);top:60px;bottom:10px;width:14px;z-index:2;pointer-events:none}
+.scrollpath svg{width:100%;height:100%}
+.scrollpath path{fill:none;stroke:var(--faint);stroke-width:1.6;vector-effect:non-scaling-stroke}
+@media (max-width:1000px){.scrollpath{display:none}}
+.sheet{position:relative;padding:clamp(52px,7vw,104px) 0 0;scroll-margin-top:56px}
+.block[id],.proj[id],#resume,.plate[id]{scroll-margin-top:76px}
+.sheet:last-of-type{padding-bottom:80px}
+.sheet-grid{display:grid;grid-template-columns:minmax(0,168px) minmax(0,1fr);gap:clamp(18px,3.2vw,48px)}
+.rail{border-right:1px solid var(--rule);padding-right:14px;position:relative}
+.rail-in{position:sticky;top:76px}
+.rail-no{font:700 12px/1 var(--f-mono);letter-spacing:.06em;display:inline-block;border:1.5px solid var(--ink);padding:6px 7px;margin-bottom:14px}
+.rail .hand{color:var(--graphite);transform:rotate(-3deg);transform-origin:left top;display:block;margin-top:6px}
+.rail .arrow{width:54px;height:34px;display:block;margin:6px 0 0 34px;color:var(--faint)}
+@media (max-width:880px){.sheet-grid{grid-template-columns:minmax(0,1fr)}.rail{border-right:0;border-bottom:1px solid var(--rule);padding:0 0 10px}.rail-in{position:static;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}.rail-no{margin:0}.rail .hand{transform:rotate(-1.5deg);margin:0}.rail .arrow{display:none}}
+.kick{font:500 12.5px/1 var(--f-mono);color:var(--faint);margin:0 0 12px}
+.h2{font-weight:800;font-size:clamp(28px,4.3vw,54px);line-height:1.02;letter-spacing:-.035em;position:relative;display:inline-block;padding-bottom:16px;margin-bottom:22px;max-width:22ch}
+.h2::after{content:"";position:absolute;left:-4px;right:-10px;bottom:0;height:11px;background:var(--ink);transition:clip-path 1s cubic-bezier(.6,.1,.3,1);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 11' preserveAspectRatio='none'%3E%3Cpath d='M2 7C40 2 72 9 112 5S190 3 232 7 282 4 298 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 11' preserveAspectRatio='none'%3E%3Cpath d='M2 7C40 2 72 9 112 5S190 3 232 7 282 4 298 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.js .h2:not(.in)::after{clip-path:inset(0 100% 0 0)}
+.h2.in::after{clip-path:inset(0 0 0 0)}
+.h3{font-weight:700;font-size:clamp(19px,2vw,24px);letter-spacing:-.015em;line-height:1.2;margin:0 0 12px}
+.block{margin-top:clamp(34px,4.5vw,56px)}
+.lead{font-size:clamp(17px,1.5vw,19.5px);line-height:1.6}
+.body>p,.block>p{color:var(--graphite)}
+.body>p.lead,.block>p.lead{color:var(--ink)}
+.todo{display:inline-block;font:500 12px/1.35 var(--f-mono);border:1.5px dashed var(--ink);border-radius:999px 14px 999px 12px;padding:4px 10px;margin:6px 0;background:var(--paper2);color:var(--ink);max-width:68ch}
+.todo b{font-weight:700}
+[hidden]{display:none!important}
+.nodraft .todo,.nodraft .draft,.nodraft #open-items,.nodraft .only-draft{display:none!important}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 18px;margin:0 0 6px;font-size:.95rem}
+.kv dt{font:500 12.5px/1.7 var(--f-mono);color:var(--faint)}
+.kv dd{margin:0;color:var(--graphite)}
+@media (max-width:520px){.kv{grid-template-columns:1fr;gap:0}.kv dd{margin-bottom:8px}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:14px 0 0;list-style:none}
+.chips li{font:500 12.5px/1 var(--f-mono);padding:8px 10px;border:1.4px solid var(--ink);border-radius:2px 7px 3px 6px}
+.two{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(20px,3vw,44px);align-items:start}
+@media (max-width:980px){.two{grid-template-columns:minmax(0,1fr)}}
+.note{padding:18px 20px}.note p:last-child{margin-bottom:0}
+
+/* ---------------------------------------------------------------- plates */
+.plate{margin:0}
+.plate-frame{padding:10px;background:
+  linear-gradient(var(--grid2) 1px,transparent 1px) 0 0/12px 12px,linear-gradient(90deg,var(--grid2) 1px,transparent 1px) 0 0/12px 12px,var(--paper2)}
+.plate-scroll{overflow-x:auto;scrollbar-width:thin}
+.plate-frame svg{display:block;width:100%;height:auto;min-width:720px}
+.pan-hint{display:none;margin:6px 2px 0;color:var(--faint)}
+@media (max-width:770px){.pan-hint{display:block}}
+.plate-tb{display:grid;grid-template-columns:minmax(0,1fr) auto;border-top:1.5px solid var(--ink);margin-top:8px}
+.plate-tb>div{padding:8px 10px;font:500 12px/1.45 var(--f-mono)}
+.plate-tb>div+div{border-left:1.5px solid var(--ink);text-align:right;white-space:nowrap}
+.plate-tb b{display:block;font-size:13px}
+.legend{list-style:none;counter-reset:lg;padding:0;margin:16px 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px 22px}
+.legend li{counter-increment:lg;position:relative;padding-left:34px;font-size:.9rem;line-height:1.4;color:var(--graphite)}
+.legend li::before{content:counter(lg);position:absolute;left:0;top:0;width:24px;height:24px;border:1.5px solid var(--ink);border-radius:50%;font:700 12px/21px var(--f-mono);text-align:center;color:var(--ink)}
+.legend code{font:700 12.5px var(--f-mono);color:var(--ink);display:block}
+.cn circle{fill:var(--paper);stroke:var(--ink);stroke-width:1.6}.cn text{font:700 13px var(--f-mono);fill:var(--ink);text-anchor:middle}
+.ld{fill:none;stroke:var(--ink);stroke-width:1.1;stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset .8s ease var(--d,0s)}
+.js .plate:not(.in) .ld{stroke-dashoffset:1}
+.ghost{opacity:0;transition:opacity .4s}
+.limits-on .ghost{opacity:1}
+.ghost rect{fill:var(--paper);stroke:var(--ink);stroke-width:1.2;stroke-dasharray:4 4}.ghost text{font:700 11.5px var(--f-mono);fill:var(--ink)}
+
+/* ---------------------------------------------------------------- ledger */
+.led-ctl{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px;align-items:center}
+.led-ctl .lab{font:500 12px var(--f-mono);color:var(--faint);margin-right:2px}
+.led-list{border-top:1.5px solid var(--ink)}
+details.led{border-bottom:1px solid var(--rule)}
+details.led[hidden]{display:none}
+.led summary{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:10px 14px;align-items:center;padding:13px 4px;list-style:none}
+.led summary::-webkit-details-marker{display:none}
+.led summary:hover{background:var(--paper2)}
+.led-id{font:700 13px var(--f-mono)}
+.led-nm{font-weight:600;line-height:1.3}
+.led-nm small{display:block;font:400 12px var(--f-mono);color:var(--faint);margin-top:2px}
+.led-body{padding:4px 4px 20px 78px;display:grid;gap:12px}
+.led-body dl{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:8px 14px}
+.led-body dt{font:500 12px/1.7 var(--f-mono);color:var(--faint)}
+.led-body dd{margin:0;color:var(--graphite);max-width:74ch}
+.led-body dd.res{color:var(--ink)}
+.ev a{display:inline-block;font:500 12.5px var(--f-mono);margin:0 12px 4px 0}
+@media (max-width:640px){.led summary{grid-template-columns:52px minmax(0,1fr)}.led summary .stamp{grid-column:2;justify-self:start}.led-body{padding-left:4px}.led-body dl{grid-template-columns:1fr;gap:0}.led-body dd{margin-bottom:8px}}
+.stamp{display:inline-block;font:700 10.5px/1 var(--f-mono);letter-spacing:.07em;text-transform:uppercase;padding:6px 8px;border:1.8px solid var(--ink);border-radius:2px;transform:rotate(-2deg);white-space:nowrap;color:var(--ink)}
+.stamp.pass{background:var(--inv);color:var(--inv-ink)}
+.stamp.fail{background:repeating-linear-gradient(-45deg,transparent 0 5px,var(--rule) 5px 6.5px);border-width:2.6px}
+.stamp.inc,.stamp.mixed{border-style:dashed}
+.stamp.partial{border-style:dotted;border-width:2.4px}
+.stamp.none{border-style:dashed;color:var(--faint);border-color:var(--faint)}
+.key{display:flex;flex-wrap:wrap;gap:10px 16px;margin:14px 0 0;font:400 12px var(--f-mono);color:var(--faint);align-items:center}
+.key .stamp{transform:none;margin-right:4px}
+
+/* ---------------------------------------------------------------- numbers, tables */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border-top:1.5px solid var(--ink);border-left:1px dashed var(--rule)}
+.nums .stat{padding:16px 14px 18px;border-right:1px dashed var(--rule);border-bottom:1px dashed var(--rule)}
+.nums .num{font-size:clamp(22px,2.4vw,32px)}
+.tw{overflow-x:auto}
+table.vt{width:100%;border-collapse:collapse;font-size:.92rem;min-width:640px}
+.vt caption{text-align:left;font:400 13px/1.5 var(--f-body);color:var(--faint);padding-bottom:10px;caption-side:top;max-width:74ch}
+.vt th{font:700 12px var(--f-mono);text-align:left;padding:9px 10px;border-bottom:1.5px solid var(--ink);border-top:1.5px solid var(--ink);white-space:nowrap}
+.vt td{padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--graphite)}
+.vt td:first-child{font-weight:600;color:var(--ink);white-space:nowrap}
+.vt td a{font:500 12.5px var(--f-mono);display:block}
+@media (max-width:640px){table.vt{min-width:0;display:block}.vt thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.vt tbody,.vt tr,.vt td,.vt caption{display:block}.vt tr{padding:14px 0;border-bottom:1px solid var(--rule)}.vt tbody tr:first-child{border-top:1.5px solid var(--ink)}.vt td{border:0;padding:3px 0}.vt td:first-child{white-space:normal;font-size:1.02rem;padding-bottom:6px}.vt td[data-l]::before{content:attr(data-l);display:block;font:500 11px var(--f-mono);color:var(--faint);margin-top:6px}.vt td a{display:inline-block;margin-right:14px}}
+
+/* ---------------------------------------------------------------- IK + pipeline */
+.ik{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:18px;align-items:stretch}
+.ik-stage{padding:8px;touch-action:none}
+.ik-stage svg{display:block;width:100%;height:auto;touch-action:none}
+.ik-read{padding:16px 18px;font:500 13px/1.7 var(--f-mono)}
+.ik-read dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 12px;margin:0 0 10px}
+.ik-read dt{color:var(--faint)}.ik-read dd{margin:0;font-variant-numeric:tabular-nums}
+.ik-read .st{display:block;margin-top:6px;font-weight:700}
+.ik-tgt{fill:var(--paper);stroke:var(--ink);stroke-width:2.4}
+.ik-tgt:focus-visible{outline:none;stroke-width:4}
+.ik-ws{fill:var(--ink);fill-opacity:.09;stroke:var(--ink);stroke-width:1;stroke-dasharray:4 4}
+.ik-leg{stroke:var(--ink);stroke-width:7;stroke-linecap:round;fill:none}
+.ik-leg.bad{stroke:var(--faint);stroke-dasharray:3 9}
+@media (max-width:760px){.ik{grid-template-columns:minmax(0,1fr)}.ik-stage .svgt{font-size:21px}.ik-stage .svgh{font-size:34px}}
+.pipe-stage{padding:10px 8px;overflow-x:auto}
+.pipe-stage svg{display:block;min-width:760px;width:100%;height:auto}
+.pn rect{fill:var(--paper);stroke:var(--ink);stroke-width:1.6;transition:fill .25s}
+.pn text{fill:var(--ink);font:700 13px var(--f-mono);text-anchor:middle;transition:fill .25s}.pn text.sub{font:400 10.5px var(--f-mono);fill:var(--faint)}
+.pn.lit rect,.pn:hover rect,.pn:focus-visible rect{fill:var(--inv)}
+.pn.lit text,.pn:hover text,.pn:focus-visible text{fill:var(--inv-ink)}
+.pn:focus-visible{outline:none}.pn:focus-visible rect{stroke-width:3}
+.pw{fill:none;stroke:var(--ink);stroke-width:1.5}
+.pipe-info{padding:14px 18px;margin-top:12px;min-height:74px}
+.pipe-info b{font:700 13px var(--f-mono);display:block;margin-bottom:4px}
+.pipe-info p{margin:0;color:var(--graphite);font-size:.95rem}
+
+/* ---------------------------------------------------------------- galleries */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:30px 24px;margin-top:22px;align-items:start}
+@media (max-width:560px){.gal{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 14px}.ph-btn::before{left:-7px;width:46px}.ph-btn::after{right:-7px;width:46px}.ph-cap{font-size:1.12rem}.ph-tag{font-size:9px;padding:4px 5px}}
+#main{overflow-x:clip}
+.ph{margin:0;transform:rotate(var(--r,0deg))}
+.ph-btn{display:block;width:100%;padding:9px 9px 0;background:var(--photo);border:0;position:relative;box-shadow:0 10px 22px var(--shadow);text-align:left;color:var(--photo-ink);transition:transform .25s}
+.ph-btn:hover,.ph-btn:focus-visible{transform:rotate(calc(var(--r,0deg)*-1)) scale(1.02)}
+.ph-btn::before,.ph-btn::after{content:"";position:absolute;top:-9px;width:58px;height:19px;background:var(--tape);backdrop-filter:blur(1px);z-index:2}
+.ph-btn::before{left:-14px;transform:rotate(-34deg)}.ph-btn::after{right:-14px;transform:rotate(31deg)}
+.ph-frame{display:block;aspect-ratio:4/3;overflow:hidden;background:#d9d9d9;position:relative}
+.ph-frame img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);transition:filter .4s}
+.ph.fitc .ph-frame img{object-fit:contain;background:#fafafa}
+.ph-btn:hover img,.ph-btn:focus-visible img{filter:none}
+.ph-tag{position:absolute;left:0;bottom:0;font:700 10px/1 var(--f-mono);letter-spacing:.07em;background:#111;color:#f3f3f3;padding:5px 7px;z-index:1}
+.ph-play{position:absolute;inset:0;display:grid;place-items:center;z-index:1}
+.ph-play svg{width:54px;height:54px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.ph-cap{display:block;font:500 1.26rem/1.12 var(--f-hand);padding:9px 4px 11px;min-height:3.1em}
+.demo-note{margin:22px 0 0;padding:14px 18px;color:var(--graphite)}
+.limits{margin-top:18px}
+details.lim{padding:0}
+.lim summary{list-style:none;display:flex;gap:12px;align-items:center;padding:14px 18px;font-weight:600}
+.lim summary::-webkit-details-marker{display:none}
+.lim summary::after{content:"open";margin-left:auto;font:500 12px var(--f-mono);text-decoration:underline}
+.lim[open] summary::after{content:"close"}
+.lim ul{margin:0;padding:0 18px 16px 38px;display:grid;gap:8px;color:var(--graphite)}
+.lim .todo{margin:0 18px 16px}
+.lessons{list-style:none;padding:0;margin:0;display:grid;gap:14px;counter-reset:ls}
+.lessons li{counter-increment:ls;padding-left:44px;position:relative;color:var(--graphite);max-width:72ch}
+.lessons li::before{content:counter(ls);position:absolute;left:0;top:-4px;font:700 2rem/1 var(--f-hand)}
+.lessons b{color:var(--ink);font-weight:700}
+.worklist{padding-left:20px;color:var(--graphite);display:grid;gap:6px;margin:0;max-width:72ch}
+
+/* ---------------------------------------------------------------- projects, experience, skills */
+.proj{padding-top:34px;margin-top:34px;border-top:1px dashed var(--rule)}
+.proj:first-of-type{border-top:0;margin-top:10px;padding-top:0}
+.proj-h{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;margin-bottom:8px}
+.proj-h .mono{color:var(--faint)}
+.proj .role{font-weight:600;color:var(--ink)}
+.proj p{color:var(--graphite)}
+.also{margin-top:38px;padding:16px 18px}
+.also ul{margin:6px 0 0;padding-left:18px;color:var(--graphite)}
+.xp{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:8px 30px;padding:24px 0;border-top:1px dashed var(--rule)}
+.xp:first-of-type{border-top:1.5px solid var(--ink)}
+.xp h3{font-size:1.12rem;font-weight:700;line-height:1.3}
+.xp .pl{color:var(--faint)}
+.xp .rl{display:block;margin-top:8px;font-size:.95rem;font-weight:600}
+.xp .rl span{display:block;font:400 12.5px var(--f-mono);color:var(--faint)}
+.xp ul{margin:0;padding-left:18px;color:var(--graphite);display:grid;gap:6px}
+.xp .xn{font:400 12.5px/1.5 var(--f-mono);color:var(--faint);margin:10px 0 0}
+@media (max-width:760px){.xp{grid-template-columns:1fr}}
+.stack{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,240px);gap:18px;margin-top:22px}
+.layers{display:grid;gap:0}
+.layer{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;padding:14px 16px;position:relative}
+.layer+.layer{margin-top:26px}
+.layer+.layer::after{content:"";position:absolute;left:50%;top:-26px;width:16px;height:26px;margin-left:-8px;background:var(--ink);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 26'%3E%3Cpath d='M8 25V3M3 9l5-7 5 7' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 26'%3E%3Cpath d='M8 25V3M3 9l5-7 5 7' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.layer h3{font:700 13px/1.3 var(--f-mono);margin:4px 0 0}
+.sk-items{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.sk-items li{border:1.3px solid var(--ink);padding:6px 9px 7px;font-size:.88rem;font-weight:600;line-height:1.25;border-radius:2px 6px 3px 5px}
+.sk-items li span{display:block;font:400 11px var(--f-mono);color:var(--faint);margin-top:2px}
+.side{padding:14px 16px;align-self:stretch;display:flex;flex-direction:column;gap:12px}
+.side h3{font:700 13px/1.3 var(--f-mono)}
+.side .sk-items{flex-direction:column}
+@media (max-width:860px){.stack{grid-template-columns:minmax(0,1fr)}.layer{grid-template-columns:minmax(0,1fr);gap:8px}.side .sk-items{flex-direction:row}}
+
+/* ---------------------------------------------------------------- certificates, education, reports, contact */
+.grp{font:700 13px var(--f-mono);margin:34px 0 4px;display:flex;align-items:center;gap:12px}
+.grp::after{content:"";flex:1;border-top:1px dashed var(--rule)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:30px 24px;margin-top:22px;align-items:stretch}
+.cert{display:flex;flex-direction:column;gap:8px;text-align:left;width:100%;border:0;padding:20px 16px 14px;position:relative;color:var(--photo-ink);box-shadow:0 10px 22px var(--shadow);transform:rotate(var(--r,0deg));transition:transform .25s;
+  background:repeating-linear-gradient(transparent 0 27px,rgba(0,0,0,.11) 27px 28px),var(--photo)}
+.cert:hover,.cert:focus-visible{transform:rotate(0) scale(1.02)}
+.cert::before{content:"";position:absolute;top:-10px;left:50%;width:74px;height:20px;margin-left:-37px;background:var(--tape);transform:rotate(-2deg)}
+.cert .ck{align-self:flex-start;font:700 10px/1 var(--f-mono);letter-spacing:.07em;text-transform:uppercase;border:1.6px solid #151515;padding:5px 6px}
+.cert .ck.win{background:#151515;color:#f3f3f3}
+.cert .ck.nc{border-style:dashed}
+.cert b{font:700 1.02rem/1.25 var(--f-body);letter-spacing:-.01em}
+.cert .ci{font:500 11.5px/1.45 var(--f-mono);color:#3a3a3a}
+.cert .cd{margin-top:-6px;color:#151515}
+.cert .ct{font:500 1.24rem/1.1 var(--f-hand);margin-top:auto;padding-top:6px}
+.edu{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,3vw,44px);align-items:start}
+@media (max-width:900px){.edu{grid-template-columns:minmax(0,1fr)}}
+.spark{padding:14px 14px 8px}
+.spark svg{display:block;width:100%;height:auto;overflow:visible}
+.courses{list-style:none;margin:0;padding:0;columns:2;column-gap:28px;font-size:.92rem;color:var(--graphite)}
+.courses li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dotted var(--rule);break-inside:avoid}
+.courses b{font:700 12.5px var(--f-mono);color:var(--ink)}
+@media (max-width:560px){.courses{columns:1}}
+.reps{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;margin-top:22px}
+.rep{padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.rep h3{font-size:1.02rem;font-weight:700;line-height:1.3}
+.rep .mono{color:var(--faint)}
+.rep p{margin:0;font-size:.92rem;color:var(--graphite)}
+.rep .btn{align-self:flex-start;margin-top:auto;padding:11px 13px;font-size:13px}
+.rep .hold{align-self:flex-start;margin-top:auto}
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:20px}
+.ct-card{padding:18px}
+.ct-card .mono{color:var(--faint);display:block;margin-bottom:4px}
+.ct-card a,.ct-card span.v{font-weight:600;word-break:break-word}
+.foot{border-top:1px solid var(--rule);margin-top:70px;padding:22px 0 40px;font:400 12.5px/1.6 var(--f-mono);color:var(--faint)}
+#open-items ol{margin:10px 0 0;padding-left:22px;display:grid;gap:8px;color:var(--graphite);max-width:80ch}
+
+/* ---------------------------------------------------------------- lightbox, terminal, page flip */
+#lb{position:fixed;inset:0;z-index:80;background:rgba(8,8,8,.95);display:grid;grid-template-rows:auto minmax(0,1fr) auto;color:#f3f3f3}
+#lb[hidden]{display:none}
+.lb-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;font:500 12.5px var(--f-mono)}
+.lb-bar .sp{flex:1}
+.lb-b{font:600 13px var(--f-mono);background:transparent;color:#f3f3f3;border:1.5px solid #f3f3f3;padding:9px 12px}
+.lb-b:hover{background:#f3f3f3;color:#111}
+.lb-b[disabled]{opacity:.3}
+.lb-stage{display:grid;place-items:center;padding:6px 14px;min-height:0;overflow:auto}
+.lb-stage img,.lb-stage video{max-width:100%;max-height:100%;object-fit:contain;background:#000}
+.lb-cap{padding:12px 16px 18px;text-align:center}
+.lb-cap .t{font:700 10.5px var(--f-mono);letter-spacing:.07em;border:1.5px solid #f3f3f3;padding:4px 6px;margin-right:10px}
+.lb-cap .c{font:500 1.45rem/1.2 var(--f-hand)}
+.bigcert{background:repeating-linear-gradient(transparent 0 31px,rgba(0,0,0,.1) 31px 32px),#f1f1f1;color:#151515;max-width:680px;width:100%;padding:34px clamp(18px,4vw,40px) 30px;text-align:left;box-shadow:0 20px 50px rgba(0,0,0,.6)}
+.bigcert .ck{display:inline-block;font:700 11px/1 var(--f-mono);letter-spacing:.07em;text-transform:uppercase;border:1.8px solid #151515;padding:6px 8px;margin-bottom:14px}
+.bigcert h3{font-size:clamp(22px,3vw,30px);letter-spacing:-.02em;line-height:1.15;margin-bottom:8px}
+.bigcert .ci{font:500 13px/1.6 var(--f-mono);color:#333;margin-bottom:16px}
+.bigcert blockquote{margin:0 0 12px;padding-left:14px;border-left:3px solid #151515;font-size:1.02rem;line-height:1.6}
+.bigcert .ex{font:400 13px/1.6 var(--f-mono);color:#333;margin:0 0 12px}
+.bigcert .ct{font:500 1.6rem/1.15 var(--f-hand);margin:8px 0 0}
+#term{position:fixed;left:0;right:0;bottom:0;height:min(62vh,520px);z-index:70;background:#0a0a0a;color:#f3f3f3;border-top:2px solid #f3f3f3;display:flex;flex-direction:column;font:400 13.5px/1.55 var(--f-mono)}
+#term[hidden]{display:none}
+.term-h{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #444}
+.term-o{flex:1;overflow:auto;padding:10px 14px;white-space:pre-wrap;word-break:break-word}
+.term-o a{color:#f3f3f3}
+.term-o .dim{color:#9a9a9a}
+.term-f{display:flex;gap:8px;padding:8px 14px 12px;border-top:1px solid #444}
+.term-f label{white-space:nowrap}
+.term-f input{flex:1;background:transparent;border:0;color:#f3f3f3;font:inherit;outline:none;min-width:0}
+.flip{position:fixed;inset:0;z-index:90;transform-origin:left center;pointer-events:none;box-shadow:30px 0 60px rgba(0,0,0,.5);animation:flip .75s cubic-bezier(.55,.05,.3,1) forwards;
+  background-image:linear-gradient(var(--fg) 1px,transparent 1px),linear-gradient(90deg,var(--fg) 1px,transparent 1px);background-size:24px 24px;background-color:var(--fp)}
+@keyframes flip{0%{transform:perspective(1800px) rotateY(0)}100%{transform:perspective(1800px) rotateY(-96deg)}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .js .asm .ln{stroke-dashoffset:0;animation:none}
+  .ph,.cert{transform:none}
+}
+
+/* ---------------------------------------------------------------- print */
+@page{size:A4;margin:14mm 13mm}
+@media print{
+  :root,:root[data-theme="light"]{--paper:#fff;--paper2:#fff;--ink:#000;--graphite:#1c1c1c;--faint:#444;--rule:#999;--inv:#000;--inv-ink:#fff;--photo:#fff;--photo-ink:#000;--grid:transparent;--grid2:transparent;--shadow:transparent;--tape:transparent}
+  html{cursor:auto}
+  body{background:#fff!important;font-size:10.5pt;line-height:1.45}
+  body::before,.top,.draft,.beam,.scrollpath,.led-ctl,.hero-cta,.ph-play,#lb,#term,.flip,.skip,.pipe-ctl,.ik-hint,.only-screen,.ph-btn::before,.ph-btn::after,.cert::before{display:none!important}
+  .sk::before,.btn::before{filter:none}
+  .wrap{max-width:none;padding:0}
+  .hero{border:0}.hero-grid{grid-template-columns:1.3fr .7fr;padding-top:0}
+  .hero h1{font-size:54pt}.hero h1 .l2{-webkit-text-stroke:1.2pt #000}
+  .sheet{padding-top:22pt}
+  .sheet-grid{grid-template-columns:minmax(0,1fr);gap:6pt}
+  .rail{border:0;padding:0}.rail-in{position:static;display:flex;gap:12pt;align-items:baseline}.rail .arrow{display:none}.rail .hand{transform:none;margin:0}
+  .h2{font-size:22pt;margin-bottom:10pt}.h2::after{clip-path:none!important}
+  .h2,.h3,.led summary,.grp{break-after:avoid}
+  .led,.ph,.cert,.rep,.xp,.stat,.plate,.layer,.proj-h,tr,.lim,.lessons li{break-inside:avoid}
+  details.led>*,details.lim>*{display:block}
+  .led summary{display:grid}.lim summary::after{content:""}
+  .ld{stroke-dashoffset:0!important}.ghost{opacity:1!important}
+  .gal{grid-template-columns:repeat(4,minmax(0,1fr));gap:10pt}.cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:10pt}
+  .ph,.cert{transform:none!important;box-shadow:none}.ph-btn,.cert{box-shadow:none;border:.6pt solid #999}
+  .ph-frame img{filter:grayscale(1) contrast(1.1)!important}
+  .ph-cap{font-size:11pt;min-height:0}
+  .ik{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .plate-frame svg,.pipe-stage svg,table.vt{min-width:0!important}
+  .plate-scroll,.pipe-stage,.tw,#main{overflow:visible!important}
+  .pan-hint{display:none!important}
+  details::details-content{content-visibility:visible!important;display:block!important}
+  .lim summary::after,.led summary::after{content:""!important;display:none!important}
+  .stamp{background:transparent!important;color:#000!important;border-color:#000!important}
+  .stamp.pass{border:1.4pt solid #000!important;font-weight:800}
+  .stamp.none{color:#444!important;border-color:#666!important}
+  .ph-tag{background:#fff!important;color:#000!important;border:.6pt solid #000}
+  .ck,.ck.win{background:transparent!important;color:#000!important;border-color:#000!important}
+  .ck.win{border-width:1.4pt!important;font-weight:800}
+  .cert{background:#fff!important;color:#000!important;box-shadow:none!important;border:.6pt solid #000}
+  .led-list{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20pt;align-items:start}
+  .nums,.hero-stats,.block:has(>.nums),.also,.demo-note,.pipe-info,.spark,.ik{break-inside:avoid}
+  .pipe-info{display:none}
+  @page{size:A4;margin:14mm 13mm}
+  details.led{break-inside:avoid;page-break-inside:avoid}
+  .led-body{padding:2pt 0 10pt!important;gap:4pt!important}
+  .led-body dl{grid-template-columns:50pt minmax(0,1fr)!important;gap:3pt 8pt!important}
+  .led summary{grid-template-columns:36pt minmax(0,1fr) auto!important;padding:6pt 0 3pt!important;gap:6pt!important}
+  .led summary .stamp{grid-column:auto!important;justify-self:end!important}
+  a{text-decoration:none}
+  .body a[href^="http"]::after,.ct-card a[href^="http"]::after{content:" (" attr(href) ")";font:400 7.5pt var(--f-mono);word-break:break-all}
+  .ev a[href^="http"]::after,.vt a[href^="http"]::after{content:""}
+  .foot{margin-top:20pt}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to the content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<filter id="wob" x="-3%" y="-10%" width="106%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="wob2" x="-4%" y="-14%" width="108%" height="128%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="9" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3" xChannelSelector="R" yChannelSelector="G"/></filter>
+<filter id="pencil" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+</defs></svg>
+<script>
+/* ==========================================================================
+   CONTENT. Everything a reader sees comes from this one object.
+   Edit text here; the code below it only renders.
+
+   OPEN ITEMS. meta.draft is false, so none of these show on the page.
+   [TODO: resume]       Save your corrected resume as assets/PSSJ-Resume.pdf.
+                        The download card in Contact appears by itself once the file exists.
+   [TODO: demo video]   The SpiderX demo slot is hidden. To show a clip, add
+                        { v: "spiderx-s4d-crawl.mp4", poster: "spiderx-s4d-crawl-poster.jpg", ... }
+                        to the SpiderX gallery.
+   [TODO: NRSC]         Get NRSC's consent before sharing the two Mecha Prime reports.
+                        The campus world file is still in the mechaprime_ws git history.
+   [TODO: HOP ALPHA]    The two lessons on the HOP ALPHA sheet are generic. Replace with your own.
+   [TODO: AI Smart City] Add evidence for the AI part; the card describes the scale model only.
+   [TODO: WRO]          State your part in Team MAVERICK.
+   [TODO: wall robot]   Add two sentences on how it worked, and a test clip.
+   [TODO: extension box] Add the year and what switches the relays.
+   [TODO: other builds] Peltier cooler and DC fan have no files. Add some or delete the lines.
+   [TODO: training]     Add the AMR Mastery and MATLAB Onramp certificates or delete the two cards.
+   [TODO: reports]      Ask your teammates before sharing the redacted spy-bot report.
+   ========================================================================== */
+const SX = "https://github.com/robovision2210/spiderx_ws/";
+const MPR = "https://github.com/robovision2210/mechaprime_ws/";
+const C = {
+  meta: {
+    draft: false,
+    name: "Sesha Sai Jagadeswar Patnala",
+    short: "PSSJ",
+    role: "Validation-first robotics engineer",
+    place: "Hyderabad, India",
+    email: "pssjagadeswar22@gmail.com",
+    github: "https://github.com/robovision2210",
+    linkedin: "https://www.linkedin.com/in/sesha-sai-jagadeswar-patnala-3b6934249/",
+    site: "https://robovision2210.github.io/",
+    updated: "November 2026"
+  },
+
+  nav: [
+    ["about", "About"], ["spiderx", "SpiderX"], ["mechaprime", "Mecha Prime"], ["vtvl", "HOP ALPHA"],
+    ["projects", "Projects"], ["experience", "Experience"], ["skills", "Skills"],
+    ["awards", "Awards"], ["education", "Education"], ["reports", "Reports"], ["contact", "Contact"]
+  ],
+
+  hero: {
+    note: "the engineering notebook of Sesha Sai Jagadeswar Patnala, 2022 to 2026",
+    line1: "Evidence first.",
+    line2: "Claims second.",
+    sub: "I am Sesha Sai Jagadeswar Patnala, a mechatronics engineer in Hyderabad. I work on legged and wheeled robots in ROS 2 and on simulation and control models for HOP ALPHA, a VTVL demonstrator. On my flagship project every run has pass/fail criteria frozen in advance, an evidence folder, and a written list of what it does not show.",
+    cta: [["#ledger", "Open the validation ledger"], ["#spiderx", "Read the case studies"]],
+    scribble: "sim only. says so on every sheet.",
+    stats: [
+      { to: 111, label: "goals in the longest scored run", sub: "0 cancels (SpiderX, S4d-M)" },
+      { to: 0.30006, dec: 5, unit: " m", label: "crawled forward, then back", sub: "simulation, band 0.300 ± 0.015 m" },
+      { to: 1983, label: "automated tests", sub: "0 failures, fresh build, 10 Nov 2026" },
+      { to: 8.75, dec: 2, unit: " / 10", label: "CGPA, B.Tech Mechatronics", sub: "First Class with Distinction" }
+    ],
+    robotAlt: "Pencil sketch of a four-legged robot seen from the side, with a lidar puck on its back sweeping a beam across the page."
+  },
+
+  about: {
+    title: "About",
+    scribble: "who is writing this",
+    text: "I am a mechatronics graduate (B.Tech in Mechatronics, 2026, CGPA 8.75 out of 10, First Class with Distinction) and an Associate Mechatronics Engineer at Abyom SpaceTech and Defence in Hyderabad. My robotics work is mostly simulation so far, and I say so: a 12-joint quadruped validated milestone by milestone in Gazebo Fortress, and a differential-drive robot with Nav2, SLAM Toolbox and docking, built as a project intern at ISRO's National Remote Sensing Centre. I have also built hardware in teams: two night-vision rovers, a scale-model smart city and a car for WRO India. I care less about a demo that works once than about a result someone else can check.",
+    facts: [
+      ["Now", "Associate Mechatronics Engineer, Abyom SpaceTech and Defence"],
+      ["Before", "Project intern, NRSC, ISRO (5 Jan to 5 Apr 2026)"],
+      ["Degree", "B.Tech in Mechatronics, 2022 to 2026"],
+      ["Based in", "Hyderabad, India"]
+    ],
+    researchTitle: "Research interests",
+    research: "Three areas hold my interest. Legged locomotion and its validation: SpiderX taught me how much a simulated result hides. Its crawl keeps a 19 mm static margin under an idealised actuator, with CAD masses and no contact measurement, and closing those gaps needs state estimation and contact-aware control that I want to learn properly. Autonomous navigation and SLAM: on Mecha Prime I configured mapping, localisation and planning, and I want to understand them well enough to say when a map or a pose estimate should not be trusted. Space robotics: working at a space technology company has shown me systems that cannot be tested casually, where simulation evidence has to carry real weight before hardware is committed. One question runs through all three: how should acceptance criteria be written so that a result in simulation still means something on hardware?",
+    interests: ["Legged locomotion and its validation", "Autonomous navigation and SLAM", "Space robotics"]
+  },
+
+  cases: [
+    /* ------------------------------------------------------------------ 1 */
+    {
+      id: "spiderx", sheet: "03", kicker: "Featured case study 1",
+      title: "SpiderX: a 12-joint quadruped, validated one frozen milestone at a time",
+      scribble: "the flagship. read the ledger.",
+      meta: [
+        ["When", "Team project 2025. SpiderX workspace May to Nov 2026, ongoing"],
+        ["Stack", "ROS 2 Humble, Gazebo Fortress, ros2_control, Python"],
+        ["Where it runs", "Simulation only"],
+        ["My part", "ROS 2 integration and simulation in the 2025 team project. In spiderx_ws: the staged plan, the acceptance criteria and every live-run authorisation."],
+        ["Method", "AI-assisted development; design, validation criteria and review by me."],
+        ["Code", ["github.com/robovision2210/spiderx_ws", SX]]
+      ],
+      problem: "A quadruped demo is easy to overclaim. A model that twitches in simulation gets described as walking, and a held pose as balance. I wanted a record in which every capability has a criterion written before the run, a scorer that is not edited afterwards, and a list of what the run does not show.",
+      builtTitle: "How it was built, and by whom",
+      built: "The robot began as a three-person college project in 2025. A teammate did the mechanical design in Fusion 360 and another the electronics; my part was ROS 2 integration and simulation in RViz and Gazebo. In 2026 I moved the model into a new workspace, spiderx_ws, and rebuilt the simulation as a staged validation programme. I re-ran milestones M1 to M6.0 on my own Ubuntu 22.04 PC. No hardware has been powered: everything on this sheet is CAD or simulation.",
+      plate: {
+        id: "plate-spiderx", title: "Plate 1. SpiderX, side view, exploded", sub: "Joint positions and link lengths are to scale from the URDF (scale bar 50 mm). Part outlines are simplified. Every label is a link or joint in the URDF.",
+        alt: "Exploded side-view sketch of the SpiderX quadruped: body shell, top cover lifted above it, simulated lidar above that, and two visible legs each with a hip servo, a thigh link and a foot link. Ten numbered callouts point to the parts.",
+        legend: [
+          ["base_link", "Body shell. The root of every leg chain."],
+          ["top_1", "Top cover, 0.297 m long. Drawn lifted off the body."],
+          ["lidar_link", "2D lidar, simulation only: 360 samples, 0.15 to 12 m, 10 Hz. It is not in the CAD export."],
+          ["b_s1_1 to b_s4_1", "Four hip servo bodies, one per leg."],
+          ["*_hip", "Hip joint: abduction about the body's long axis. Span 1.31 rad."],
+          ["*_holder_1", "Servo holder that carries the thigh servo."],
+          ["*_thigh_joint", "Thigh joint: flexion about the lateral axis. Span 1.40 rad."],
+          ["*_thigh_1", "Thigh link, 110.0 mm from thigh axis to knee axis."],
+          ["*_foot_joint", "Knee joint. Span 1.13 rad."],
+          ["*_foot_1", "Foot link, 104.3 mm from knee axis to the derived foot tip."]
+        ],
+        ghosts: ["no imu_link in the URDF", "no battery part in the URDF", "mass 7.29 kg = CAD default steel", "joint effort 100 N·m = placeholder"]
+      },
+      ledgerIntro: "Each entry opens to show the criterion, the result, the evidence in the repository and what the result does not mean. Failures stay in the list. The 0.3 m run is open as an example.",
+      ledgerOpen: "S4d-M",
+      ledger: [
+        { id: "M0", name: "Model and simulation", status: "pass",
+          criterion: "The URDF passes check_urdf, the robot spawns in Gazebo Fortress, and /scan, /joint_states and TF are live.",
+          result: "31 links and 30 joints, 12 of them revolute. Simulated lidar ranges land within ±8 mm of the world geometry. Verified on my Ubuntu 22.04 PC and in a cloud VM.",
+          limit: "The CAD mass is 7.29 kg because every part carries Fusion 360's default steel. That is not the real robot.",
+          ev: [["STATUS.md", "blob/main/STATUS.md"], ["URDF audit", "blob/main/docs/SPIDERX_URDF_AUDIT.md"]] },
+        { id: "M1", name: "Joint position control", status: "pass",
+          criterion: "Move one joint to +0.2 rad and back, send all 12 joints to the neutral pose, and refuse invalid joints and out-of-limit targets.",
+          result: "PASS. Tracking error 0.0000 rad in the cloud run. All 26 steps of the local test sequence passed.",
+          limit: "Tracking is idealised by a 100 N·m placeholder effort limit. This is not standing or walking.",
+          ev: [["M1 results", "blob/main/docs/M1_TEST_RESULTS.md"]] },
+        { id: "M2", name: "Posture hold", status: "pass",
+          criterion: "Hold the CAD neutral pose for 10 s of simulation time with joint error, body height, roll and pitch inside documented thresholds.",
+          result: "PASS over 3 runs. Roll and pitch stayed within 0.00022 rad, joint error within 0.00028 rad, body height at or above 0.05448 m.",
+          limit: "Joint angles are held. There is no balance feedback, and foot contact was not measured.",
+          ev: [["M2 results", "blob/main/docs/M2_TEST_RESULTS.md"], ["M2 limitations", "blob/main/docs/M2_SIMULATION_LIMITATIONS.md"]] },
+        { id: "M3", name: "Single-leg FK and IK", status: "pass",
+          criterion: "Forward kinematics must match TF and Gazebo. Inverse kinematics must reach 5 lifted foot targets and refuse unreachable or out-of-limit ones.",
+          result: "PASS on the front-left leg. FK agrees with TF to 5.4e-11 m. All 5 targets reached within 1.1e-10 m. Both negative targets were refused with 0 goals sent.",
+          limit: "One leg and static targets. Not a gait.",
+          ev: [["M3 results", "blob/main/docs/M3_TEST_RESULTS.md"], ["Frame conventions", "blob/main/docs/M3_FRAME_CONVENTIONS.md"]] },
+        { id: "M4", name: "All-leg IK and static poses", status: "pass",
+          criterion: "Hold three static four-leg poses through IK: neutral stance, a 10 mm crouch, and a 15 mm front-left foot lift.",
+          result: "PASS. Foot tips within 1.2e-10 m of target. Roll and pitch within 2.8e-5 rad over 5 s holds.",
+          limit: "Static poses only. Contact was not measured.",
+          ev: [["M4 results", "blob/main/docs/M4_TEST_RESULTS.md"]] },
+        { id: "M4.1", name: "Controller start-up order", status: "pass",
+          criterion: "The trajectory controller may start only after the joint-state broadcaster's spawner exits 0. A forced broadcaster failure must never load it.",
+          result: "PASS. 385 tests, 0 failures. The forced failure logged exactly one error line and loaded nothing else.",
+          limit: "Start-up robustness only. It adds no motion.",
+          ev: [["M4.1 results", "blob/main/docs/M4_1_TEST_RESULTS.md"]] },
+        { id: "M4.5", name: "Offline gait analysis", status: "mixed", stamp: "2 of 6 gaits fail, kept",
+          criterion: "Check six gaits (wave, tripod crawl, ripple, amble, pace, trot) against IK, joint limits, a static-stability approximation and a joint-speed placeholder.",
+          result: "All six are kinematically feasible. Wave and tripod crawl FAIL static stability, because the model's centre of mass sits about 5.8 mm behind the foot centre. Wave also exceeds the joint-speed placeholder at 0.541 rad/s. Reported, not tuned away.",
+          limit: "Offline only. Stability is a quasi-static approximation and no simulator was run.",
+          ev: [["M4.5 results", "blob/main/docs/M4_5_TEST_RESULTS.md"]] },
+        { id: "M5", name: "Offline evaluation study", status: "pass",
+          criterion: "A staged study behind a Stage 0/1 gate, with hypotheses registered in advance and byte-identical reruns.",
+          result: "PASS. 293 stage evaluations (270 unique) ran twice with byte-identical artifacts. The gate caught a floating-point round-off in the gait phase code, which was then fixed.",
+          limit: "Model predictions only. Not dynamic stability, energy or hardware.",
+          ev: [["M5 results", "blob/main/docs/M5_TEST_RESULTS.md"]] },
+        { id: "M6.0", name: "Playback safety layers", status: "partial", stamp: "live step not run",
+          criterion: "Before any gait is replayed, one bounded crouch trajectory must pass an offline preflight, a mock action client and a read-only check of the live ROS graph.",
+          result: "The offline and mock layers are verified (932 tests, later 1,116). The read-only graph preflight returned READY on my PC. The live crouch playback is still waiting for approval and has not been run.",
+          limit: "No goal reached a live controller in this milestone.",
+          ev: [["M6 results", "blob/main/docs/M6_TEST_RESULTS.md"], ["Graph preflight", "blob/main/docs/M6_GRAPH_PREFLIGHT_RESULTS.md"]] },
+        { id: "M6.1-A", name: "One trot cycle on a welded base", status: "pass", stamp: "pass on attempt 3",
+          criterion: "Send exactly one approved trot cycle (2 cm step, 6 mm lift, 4.0 s) to a body welded above the floor, under checks E1 to E11.",
+          result: "Attempt 1 was refused before dispatch, 0 goals, by a discovery false negative. Attempt 2 sent 1 goal and my own client's tracking check cancelled it: a reference-timing defect, not the robot. Attempt 3 PASSED with 1 goal, 0 cancels and 0.0085 rad maximum in-flight error.",
+          limit: "The body was welded. This shows trajectory execution and tracking, not walking.",
+          ev: [["Cloud verification report", "blob/main/docs/M61A_CLOUD_VERIFICATION.md"]] },
+        { id: "S0", name: "Shadow session", status: "mixed", stamp: "10 of 13, then fixed", when: "13 Oct 2026",
+          criterion: "Run the real graph, monitors and keyboard path with dispatch disabled, under 13 checks.",
+          result: "10 of 13 checks passed as written. Check 1.7 FAILED because it bounded a simulation-time phase by wall time. Both findings were fixed and 1.7 was re-scored PASS in simulation time.",
+          limit: "Nothing was sent to the robot.",
+          ev: [["Evidence folder", "tree/main/docs/evidence/m55/shadow_cloud_20261013T050401Z"]] },
+        { id: "S2", name: "Fixed-base crawl", status: "fail", stamp: "FAIL, kept", when: "30 Oct 2026",
+          criterion: "All crawl phases on the real controller with the body welded: every phase succeeds, tracking within 0.02 rad, and no stray trajectory messages (P1 to P8).",
+          result: "The script completed with 59 goals and 1 scripted cancel, but the frozen scorer said FAIL: P4 FAIL, P2 UNMEASURED. I accepted the run later under a written criteria revision, r1. The original FAIL is preserved and stays FAIL.",
+          limit: "Fixed base: no contact and no balance.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s2_phase_c_20261030T062140Z"], ["Adjudication r1", "tree/main/docs/evidence/m55/s2_phase_c_20261030T062140Z_adjudication_r1"]] },
+        { id: "S3", name: "First free-base crawl", status: "inc", stamp: "INCONCLUSIVE, kept", when: "1 Nov 2026",
+          criterion: "First ground contact: scripted forward cycles at the slowest level, with limits on tilt, travel per cycle, drift and height (A1 to A8).",
+          result: "Six cycles moved the body about 0.1201 m, 20.015 to 20.029 mm per cycle, with tilt within 0.0026 rad. The frozen scorer said INCONCLUSIVE because A3 was UNMEASURED. Accepted later under criteria revision S3-r1; the original verdict is preserved.",
+          limit: "Idealised actuator model, assumed contact model, CAD masses.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s3_free_base_20261101T115002Z"], ["Adoption record", "tree/main/docs/evidence/m55/s3_free_base_20261101T115002Z_adoption_s3r1"]] },
+        { id: "S4a", name: "Reverse and return", status: "pass", when: "1 Nov 2026",
+          criterion: "One reverse cycle and one forward return, each stopping at its boundary, then a planned emergency stop and a 10 s hold (A1 to A8).",
+          result: "PASS. Reverse −19.992 mm, return +20.024 mm. 19 goals and 1 planned cancel.",
+          limit: "The keys were written by a driver script through the real teleop path. No person operated a keyboard.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s4a_live_20261101T153411Z"]] },
+        { id: "S4b", name: "Operator input", status: "pass", when: "2 Nov 2026",
+          criterion: "Key release in mid-phase, reversal at a phase boundary, home, and loss of the command lease with the teleop killed in mid-goal (B1 to B11).",
+          result: "PASS. 12 goals, 0 cancels. After the lease was lost the robot stayed DISARMED and still for 10 s of simulation.",
+          limit: "Automated keyboard-path input, slowest level only.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s4b_live_20261102T092327Z"]] },
+        { id: "S4c", name: "Faster levels: 40 and 60 mm strides", status: "pass", when: "2 to 3 Nov 2026",
+          criterion: "One forward and one reverse cycle at each faster level (C1 to C11).",
+          result: "PASS at both. Level 1: +40.052 mm and −39.967 mm. Level 2: +60.015 mm and −59.959 mm. 18 goals and 0 cancels each, maximum tracking error 0.00225 rad.",
+          limit: "Incremental enabled builds, not clean ones. A fresh disabled build was verified afterwards.",
+          ev: [["Level 1 evidence", "tree/main/docs/evidence/m55/s4c_l1_live_20261102T182303Z"], ["Level 2 evidence", "tree/main/docs/evidence/m55/s4c_l2_live_20261103T111733Z"]] },
+        { id: "S4d-M", name: "The 0.3 m run", status: "pass", when: "11 Nov 2026",
+          criterion: "At the fastest level, crawl 0.300 m ± 0.015 m forward and the same back, with release, reversal, home and close-while-moving, under 16 scorer checks (M1 to M16).",
+          result: "PASS on the one authorised attempt. +0.30006 m out and −0.29985 m back. 111 goals, 0 cancels. Maximum tracking error 0.00225 rad over 10,076 feedback samples. Drift at every stop within 0.56 mm lateral and 0.0068 rad heading.",
+          limit: "The simulator did not shut down gracefully: it ignored SIGINT and was killed after 5 s, and there is a postmortem. The claim is 'about 0.3 m', never 'at least 0.3 m'.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s4d_live_20261111T052817Z"], ["Shutdown postmortem", "tree/main/docs/evidence/m55/s4d_live_20261111T052817Z_shutdown_postmortem_20261111T101720Z"], ["Acceptance plan", "blob/main/docs/S4D_ACCEPTANCE_PLAN.md"]] },
+        { id: "S4d-E", name: "Emergency stop at the fastest level", status: "pass", when: "11 Nov 2026",
+          criterion: "One real goal, one emergency stop, one cancel, then a 10 s hold, under a frozen contract (E1 to E12).",
+          result: "PASS. The node reached FAULTED on the request's own clock instant, against a 50 ms limit. The controller reported the goal CANCELED and the body held for 10 s.",
+          limit: "The cancel landed about 0.04 s of simulation after the goal started, before any measurable motion. It proves the stop path. It does not show a moving body being stopped.",
+          ev: [["Run evidence", "tree/main/docs/evidence/m55/s4d_e_live_20261111T113831Z"], ["Frozen contract", "blob/main/docs/S4D_E_CONTRACT.md"]] },
+        { id: "S4e", name: "A person at the keyboard", status: "none", stamp: "not run",
+          criterion: "A human operator walks the robot from a physical keyboard.",
+          result: "Not run.", limit: "Until it is, every keyboard result above is automated input.", ev: [] },
+        { id: "M7+", name: "Odometry, SLAM, Nav2, hardware", status: "none", stamp: "not started",
+          criterion: "Leg odometry, then SLAM, then Nav2, then the real robot, in that order.",
+          result: "Not started. The SLAM and Nav2 packages are configured but blocked until odometry exists.",
+          limit: "Nav2 comes last on purpose: it needs a robot that executes velocity commands and reports odometry.",
+          ev: [["Roadmap", "blob/main/docs/SPIDERX_DEVELOPMENT_ROADMAP.md"]] }
+      ],
+      numbers: [
+        { to: 12, label: "revolute joints", sub: "31 links, 30 joints in the URDF" },
+        { to: 8, label: "live simulation runs", sub: "each from a never-pushed enabling branch" },
+        { to: 111, label: "goals, 0 cancels", sub: "S4d-M, 11 Nov 2026" },
+        { to: 0.00225, dec: 5, unit: " rad", label: "largest tracking error", sub: "over 10,076 samples in S4d-M" },
+        { to: 1983, label: "tests, 0 failures", sub: "fresh disabled build" },
+        { to: 19.4, dec: 1, unit: " mm", label: "static margin of the crawl", sub: "requirement 15 mm, quasi-static model" }
+      ],
+      ikTitle: "Try the leg: 2-link inverse kinematics",
+      ikText: "This is the front-left leg in its side plane, with the link lengths and joint limits read from the SpiderX URDF. Drag the foot target. Inside the shaded region the solver returns joint angles. Outside it the solver refuses, which is what the real IK does.",
+      galleryTitle: "Evidence",
+      gallery: [
+        { f: "spiderx-s4d-before.jpg", w: 1200, h: 900, tag: "SIMULATION", fit: "contain", alt: "Gazebo view of the quadruped at rest on a grey floor before the S4d-M run begins.", cap: "S4d-M, at rest before the first key." },
+        { f: "spiderx-s4d-after.jpg", w: 1200, h: 900, tag: "SIMULATION", fit: "contain", alt: "Gazebo view of the quadruped after the S4d-M script, standing where it started.", cap: "S4d-M after 111 goals: 0.3 m out, 0.3 m back." },
+        { f: "spiderx-gazebo-fortress-local.jpg", w: 1044, h: 930, tag: "SIMULATION", fit: "contain", alt: "Gazebo Fortress on Ubuntu showing the SpiderX model on a grey floor with a pillar and walls, and the entity tree listing spiderx.", cap: "SpiderX in Fortress on my own PC. Real-time factor about 0.2." },
+        { f: "spiderx-lidar-rays.jpg", w: 1185, h: 950, tag: "SIMULATION", fit: "contain", alt: "Gazebo collision view with the robot's collision meshes highlighted and lidar rays fanning out from its back.", cap: "Collision meshes and simulated lidar rays." },
+        { f: "spiderx-rviz-scan-tf.jpg", w: 1600, h: 1000, tag: "SIMULATION", fit: "contain", alt: "RViz with the robot model in the centre and laser-scan points tracing the surrounding walls and obstacles.", cap: "RViz: robot model, TF and /scan." },
+        { f: "spiderx-m2-posture-hold.jpg", w: 1200, h: 800, tag: "SIMULATION", fit: "contain", alt: "Gazebo view of the quadruped holding its CAD neutral pose.", cap: "M2 posture hold. Joint angles held; not balance." },
+        { f: "spiderx-s2-fixed-base-rig.jpg", w: 1200, h: 900, tag: "SIMULATION", fit: "contain", alt: "Gazebo view of the quadruped welded above the floor on the fixed-base rig.", cap: "S2 rig before the first goal. This attempt's verdict was FAIL." },
+        { f: "quad-rviz-model.jpg", w: 1600, h: 909, tag: "SIMULATION", fit: "contain", alt: "RViz on Ubuntu showing the grey quadruped URDF with a cylinder on its top cover.", cap: "Oct 2025: the team CAD as a URDF in RViz. My part of the college project." },
+        { f: "quad-gazebo-classic-lidar.jpg", w: 1600, h: 909, tag: "SIMULATION", fit: "contain", alt: "An earlier Gazebo Classic window with the quadruped at the centre of a disc of lidar rays.", cap: "Oct 2025: first Gazebo Classic run, before the move to Fortress." },
+        { f: "quad-cad-fusion.jpg", w: 1280, h: 628, tag: "CAD", fit: "contain", alt: "Autodesk Fusion view of the quadruped CAD model beside its component tree: base_link, four servos, thighs and feet.", cap: "Team CAD in Fusion 360. Mechanical design by a teammate." },
+        { v: "quad-leg-motion-study.mp4", poster: "quad-leg-motion-study-poster.jpg", w: 960, h: 574, tag: "CAD VIDEO", alt: "Fusion 360 motion study of a single leg linkage sweeping through its range.", cap: "Team CAD: motion study of one leg linkage, Aug 2025." },
+      ],
+      limits: [
+        "Balance control. Joint angles are commanded; nothing reacts to the body's attitude.",
+        "An IMU. The URDF has no imu_link.",
+        "Odometry. None exists, so SLAM and Nav2 are configured but blocked.",
+        "A person at the keyboard. Every keyboard-path run used scripted input.",
+        "Hardware. No hardware has been powered. Every result on this sheet is simulation.",
+        "A moving body being stopped. The emergency-stop run cancelled before measurable motion.",
+        "Turning or sideways motion. The crawl is forward and reverse only.",
+        "Real mass and torque. The model weighs 7.29 kg in default steel and the joints have a 100 N·m placeholder limit.",
+        "Foot contact forces. They were never measured.",
+        "Reproduction from the main branch. Dispatch is hard-disabled in every pushed build; the live runs used a two-line enabling patch that was never pushed."
+      ],
+      lessons: [
+        ["Keep the failure.", "S2's frozen verdict was FAIL. I accepted the run later under a written criteria revision, and the original FAIL is still in the record."],
+        ["Time is a unit.", "A watchdog on wall time would have faulted every long phase at a real-time factor of about 0.2. It now runs on simulation time."],
+        ["Check the checker.", "The second welded-base cycle was cancelled by my own client's tracking reference, not by the robot. The joints were within 0.0108 rad the whole time."],
+        ["Say what a pass does not mean.", "The emergency-stop run passed all 12 checks and still does not show a moving robot being stopped."],
+        ["Simulation flatters.", "Default-steel masses and 100 N·m joints are not my robot. The ledger says so beside every result that depends on them."]
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 2 */
+    {
+      id: "mechaprime", sheet: "04", kicker: "Featured case study 2",
+      title: "Mecha Prime: the Autonomous Guided Robot project at ISRO NRSC",
+      scribble: "clean demos. no measurements. I say so.",
+      meta: [
+        ["When", "5 Jan to 5 Apr 2026, at NRSC's Outreach Facility, Hyderabad"],
+        ["Stack", "ROS 2 Humble, Ignition Gazebo 6, Nav2, SLAM Toolbox, AMCL, ros2_control, OpenCV"],
+        ["Guides", "Mrs. Shafali Tandon, Scientist/Engineer-SF, NRSC. Dr. S. Janakiraman, internal guide"],
+        ["Certified as", "'Autonomous Guided Robot (ROS2 + Ignition Gazebo)', NRSC certificate dated 6 Apr 2026"],
+        ["My part", "A solo project: URDF, launch files, Nav2 configuration, Python nodes, chassis drawing and assembly."],
+        ["Code", ["github.com/robovision2210/mechaprime_ws", MPR]]
+      ],
+      problem: "Take a differential-drive robot from an empty URDF to mapping, localisation, goal navigation, QR-guided docking and a maze solver, all from one launch file, inside the project period. Then build the chassis and electronics so the same stack has a body to move into.",
+      plate: {
+        id: "plate-amr", title: "Plate 2. Mecha Prime, front view, exploded", sub: "Outline from my chassis drawing (mm). Parts are from the URDF and the bill of materials. The ultrasonic sensor is on the hardware only.",
+        alt: "Exploded front-view sketch of the Mecha Prime robot: payload plate on top, lidar puck, top lid, mid lid and base body with camera and ultrasonic openings, two drive wheels and ball casters. Ten numbered callouts.",
+        legend: [
+          ["ex_plate_link", "Payload plate on four posts."],
+          ["lidar_sensor_link", "RPLIDAR A1M8 on the prototype. A simulated planar lidar in Gazebo."],
+          ["top_lid_link", "Top lid. Carries the Raspberry Pi 5 on the prototype."],
+          ["mid lid", "ESP32 and power electronics (hardware layer, not a separate URDF link)."],
+          ["base_link", "Base: motors, battery and motor driver."],
+          ["camera_sensor_link", "Front camera. Reads QR markers in simulation."],
+          ["HC-SR04", "Front ultrasonic sensor. On the prototype only; not in the URDF."],
+          ["left / right wheel", "Two drive wheels on a differential drive."],
+          ["castor links", "Four ball casters, one near each corner."],
+          ["imu_sensor_link", "IMU. Used for yaw during maze turns in simulation."]
+        ],
+        ghosts: ["navigation never run on this body", "no runs measured", "IMU not fused into localisation"]
+      },
+      pipeTitle: "The navigation pipeline, node by node",
+      pipeText: "Plugin names are read from the repository's config files. Select a node to see what it does here.",
+      pipeline: [
+        { id: "scan", label: "/scan", sub: "lidar", info: "A planar scan from the simulated lidar. It feeds mapping, localisation and both costmaps." },
+        { id: "slam", label: "SLAM Toolbox", sub: "online map", info: "Online mapping while the robot is driven by teleop. The map of the house world is saved for later sessions." },
+        { id: "amcl", label: "AMCL", sub: "particle filter", info: "Particle-filter localisation on the saved map, with a likelihood-field laser model and a differential motion model." },
+        { id: "plan", label: "Planner", sub: "Smac 2D", info: "nav2_smac_planner/SmacPlanner2D on a global costmap with static, obstacle and inflation layers." },
+        { id: "smooth", label: "Smoother", sub: "simple smoother", info: "nav2_smoother::SimpleSmoother tidies the planned path before it is followed." },
+        { id: "ctrl", label: "Controller", sub: "pure pursuit", info: "Regulated Pure Pursuit, the path follower." },
+        { id: "mux", label: "twist_mux", sub: "one owner", info: "One velocity owner at a time. The joystick outranks navigation, and navigation outranks the keyboard." },
+        { id: "drive", label: "Diff drive", sub: "ros2_control", info: "ros2_control DiffDriveController turns the chosen velocity command into wheel speeds." }
+      ],
+      pipeSide: [
+        { id: "bt", label: "BT navigator", info: "Replans inside a recovery node and retries after waiting, backing up and spinning." },
+        { id: "rec", label: "Recoveries", info: "Behaviour server plugins: spin, back up, wait." }
+      ],
+      tableTitle: "What was demonstrated, and where the evidence is",
+      tableNote: "No pass/fail criteria were frozen for this project and no runs were measured, so this sheet is qualitative. The table lists what the public repository and its recordings show, which is a weaker standard than the SpiderX ledger.",
+      table: [
+        ["Bring-up", "One launch file starts Gazebo, the controllers and twist_mux.", "Runs in the recorded sessions.", [["launch file", MPR + "blob/main/src/mechaprime_bringup/launch/simulated_robot.launch.py"]]],
+        ["Velocity arbitration", "twist_mux priorities: joystick first, then navigation, then keyboard.", "Configured, and visible in the node graph.", [["config", MPR + "blob/main/src/mechaprime_controller/config/twist_mux_topics.yaml"]]],
+        ["QR maze solver", "A small state machine: drive forward, read a QR command when a wall is close, turn on IMU yaw, stop on 'stop'.", "Completes the maze in the recording.", [["maze_solver.py", MPR + "blob/main/src/mechaprime_scripts/mechaprime_scripts/maze_solver.py"], ["recording", MPR + "blob/main/media/mechaprime_maze_solver.gif"]]],
+        ["Mapping", "SLAM Toolbox, online, driven by teleop.", "A saved map of the house world.", [["map.yaml", MPR + "blob/main/src/mechaprime_mapping/maps/small_house/map.yaml"]]],
+        ["Localisation", "AMCL on the saved map.", "The particle cloud follows the robot in the RViz capture.", [["amcl.yaml", MPR + "blob/main/src/mechaprime_localization/config/amcl.yaml"]]],
+        ["Goal navigation", "Nav2 with Smac 2D, a simple smoother, Regulated Pure Pursuit and spin, back-up and wait recoveries.", "Reaches goals and patrol waypoints in the recording.", [["navigation config", MPR + "tree/main/src/mechaprime_navigation/config"], ["recording", MPR + "blob/main/media/mechaprime_navigation_docking.gif"]]],
+        ["Docking", "Nav2 to a pre-dock pose, then alignment on a QR marker from the camera. Also triggered by a simulated battery level.", "Docks in the recording.", [["docking scripts", MPR + "tree/main/src/mechaprime_scripts/mechaprime_scripts"]]],
+        ["Hardware prototype", "Printed layered chassis with the listed parts fitted.", "Assembled. Navigation has not been run on it.", [["photos below", "#mechaprime-gallery"]]]
+      ],
+      numbers: [],
+      galleryTitle: "Demos and photographs",
+      gallery: [
+        { v: "mechaprime-maze-solver.mp4", poster: "mechaprime-maze-solver-poster.jpg", w: 960, h: 516, tag: "SIMULATION VIDEO", alt: "Screen recording: the simulated robot drives through a blue-walled maze, reading QR markers and turning.", cap: "QR maze solver. Simulation, sped up." },
+        { v: "mechaprime-nav-docking.mp4", poster: "mechaprime-nav-docking-poster.jpg", w: 800, h: 450, tag: "SIMULATION VIDEO", alt: "Screen recording: Gazebo house world beside RViz with a costmap while the robot navigates and docks.", cap: "Nav2 goals, patrol and QR docking. Simulation, sped up." },
+        { f: "mechaprime-prototype-iso.jpg", w: 1600, h: 1305, tag: "HARDWARE PHOTO", alt: "The assembled Mecha Prime robot: white printed body, orange top plate with raised MECHAPRIME lettering on four posts, a blue-rimmed drive wheel and two round sensor openings at the front.", cap: "The assembled prototype. Navigation has only run in simulation." },
+        { f: "mechaprime-prototype-front.jpg", w: 1600, h: 1216, tag: "HARDWARE PHOTO", alt: "Front of the robot: a small camera opening above two round ultrasonic openings, with the lidar visible under the orange plate.", cap: "Front: camera above, ultrasonic openings below, lidar under the plate." },
+        { f: "mechaprime-prototype-side.jpg", w: 960, h: 1280, tag: "HARDWARE PHOTO", alt: "Side of the robot showing one blue-rimmed drive wheel in a wheel arch.", cap: "Side: one of the two drive wheels." },
+        { f: "mechaprime-prototype-quarter.jpg", w: 1280, h: 1044, tag: "HARDWARE PHOTO", alt: "Three-quarter view of the robot on a tiled floor.", cap: "Three-quarter view." },
+        { f: "mechaprime-chassis-drawing.png", w: 1600, h: 1305, tag: "DIAGRAM", fit: "contain", alt: "Engineering drawing with side, front and top views of the chassis, dimensioned in millimetres.", cap: "Chassis drawing from Fusion 360, in mm." },
+        { f: "mechaprime-rviz-nav2-amcl.jpg", w: 1266, h: 938, tag: "SIMULATION", fit: "contain", alt: "RViz during navigation: a cloud of particles around the robot, an inflated costmap and a planned path.", cap: "RViz: AMCL particles, costmap and the planned path." },
+        { f: "mechaprime-rviz-costmap-house.jpg", w: 840, h: 562, tag: "SIMULATION", fit: "contain", alt: "RViz showing the outline of a house map with inflated obstacle borders.", cap: "Global costmap over the saved small_house map." },
+        { f: "mechaprime-maze-topview.jpg", w: 1155, h: 1026, tag: "SIMULATION", fit: "contain", alt: "Gazebo top view of a blue-walled maze with QR markers and the robot.", cap: "qr_maze.world from above, with its QR markers." },
+        { f: "mechaprime-qr-detect.jpg", w: 632, h: 518, tag: "SIMULATION", fit: "contain", alt: "Camera window from the simulated robot with a QR code boxed in green and the text QR: right.", cap: "Simulated camera: a marker decoded as 'right'." },
+        { f: "mechaprime-lidar-terminal.jpg", w: 733, h: 470, tag: "SIMULATION", fit: "contain", alt: "Terminal printing front, left, right and back distances from the read_lidar node.", cap: "read_lidar: four-quadrant ranges from the simulated scan." },
+        { f: "mechaprime-rqt-graph.jpg", w: 1473, h: 819, tag: "DIAGRAM", fit: "contain", alt: "rqt node graph linking the joystick relay, twist_mux and the wheel controller.", cap: "rqt graph: joystick relay, twist_mux, wheel controller." }
+      ],
+      limits: [
+        "Navigation on the hardware. The prototype is assembled; the stack has only run in simulation.",
+        "Measurements. No runs were logged, so this sheet gives no localisation, docking or timing figures.",
+        "Frozen pass/fail criteria. None were written for this project.",
+        "Sensor fusion. Localisation uses the lidar and wheel odometry; the IMU is used for yaw in the maze solver only.",
+        "Hardware tuning. The navigation parameters were tuned for the simulated robot and have not been matched to the prototype's motors.",
+        "Any site-specific map. The public worlds are an empty world, a QR maze and a house."
+      ],
+      lessons: [
+        ["Demos are not measurements.", "This project has clean recordings and a report, but no frozen criteria and no logged runs. SpiderX was built the other way round."],
+        ["One owner for velocity.", "Fixed twist_mux priorities made manual override predictable: the joystick always wins."],
+        ["A maze does not need a map.", "A small state machine, a range check and IMU yaw were enough to follow QR turns."],
+        ["Simulation tuning is not hardware tuning.", "Parameters that work on the simulated robot have to be retuned for the prototype's motors before any hardware run."]
+      ]
+    },
+
+    /* ------------------------------------------------------------------ 3 */
+    {
+      id: "vtvl", sheet: "05", kicker: "Featured case study 3",
+      title: "HOP ALPHA: simulation and control models for a VTVL demonstrator",
+      scribble: "employer work. names only, no figures.",
+      meta: [
+        ["When", "Jun 2026 to present"],
+        ["Where", "Abyom SpaceTech and Defence, Hyderabad"],
+        ["Role", "Associate Mechatronics Engineer (Nov 2026 on). Graduate Engineer Trainee, Avionics (Jun to Oct 2026)"],
+        ["Tools", "MATLAB, Simulink"],
+        ["My part", "Modelling inside a team. The vehicle, the engine and their results are my employer's."]
+      ],
+      problem: "A vehicle that takes off and lands vertically is unstable without active control. Before hardware flies, the flight controller has to be shown to hold in simulation.",
+      work: [
+        "Simulation and control models for HOP ALPHA, an EDF-powered VTVL demonstrator with thrust vector control.",
+        "Contributions to the injector mechanism and torch-igniter control for ABYOKALAM, a reusable cryogenic engine, including pintle-injector flow-control research.",
+        "Coordination with the propulsion, avionics and structures teams."
+      ],
+      plate: {
+        id: "plate-tvc", title: "Plate 3. Thrust-vector gimbal, generic schematic", sub: "A textbook arrangement drawn to explain thrust vector control. It is not HOP ALPHA geometry and carries no dimensions.",
+        alt: "Generic sketch of a ducted fan held in two nested gimbal rings, with a strut on each ring and a thrust arrow below inside a dashed cone. Eight numbered callouts.",
+        legend: [
+          ["EDF unit", "Electric ducted fan. The thrust source."],
+          ["Inner ring", "Carries the fan and turns about one axis."],
+          ["Outer ring", "Carries the inner ring and turns about the other axis."],
+          ["Inner-ring drive", "Tilts the inner ring. Drawn as a plain strut."],
+          ["Outer-ring drive", "Tilts the outer ring. Drawn as a plain strut."],
+          ["Thrust vector", "Tilting it produces the control torque."],
+          ["Tilt cone", "The directions the thrust vector can point. Drawn without scale."],
+          ["Vehicle frame", "Fixed mounting points on the airframe."]
+        ],
+        ghosts: ["no vehicle numbers on this sheet", "no test results on this sheet"]
+      },
+      numbers: [],
+      limits: [
+        "Numbers of any kind for the vehicle or the engine.",
+        "Controller design details, plots and test results.",
+        "Any flight or hot-fire data.",
+        "My share of the engine work beyond 'contributions'. It is a team programme."
+      ],
+      lessons: [
+        ["Model before metal.", "On a vehicle that cannot be tested casually, the simulation is where a control idea is tried first."],
+        ["Agree the interfaces early.", "A control model is only useful if it matches what the propulsion, avionics and structures teams are building."]
+      ]
+    }
+  ],
+
+  projects: {
+    title: "More projects",
+    scribble: "mostly team builds.",
+    list: [
+      { id: "nvsb1", title: "Night Vision Spy Bot 1", when: "Nov 2024", ctx: "Team project",
+        role: "My part: circuit and firmware.",
+        text: "The first version of our remote-controlled night-vision spy bot: a four-wheel rover with an LED bar and a camera mount on two servos. CAD by a teammate.",
+        limits: ["Any autonomous behaviour or obstacle avoidance.", "Night-vision image quality."],
+        gallery: [
+          { f: "nvsb1-rover-front-led.jpg", w: 1200, h: 1600, tag: "HARDWARE PHOTO", alt: "A white four-wheel rover with knobbly tyres and a bright LED bar, lit in a dim room.", cap: "Version 1 with its LED bar on." },
+          { f: "nvsb1-rover-room.jpg", w: 960, h: 1280, tag: "HARDWARE PHOTO", alt: "The same rover further away on a tiled floor.", cap: "On the floor of a dim room." },
+          { f: "nvsb1-drawing-views.jpg", w: 1020, h: 730, tag: "DIAGRAM", fit: "contain", alt: "Drawing sheet with isometric, top and front views of the rover and dimensions in millimetres.", cap: "Drawing sheet, in mm." },
+          { v: "nvsb1-drive-test.mp4", poster: "nvsb1-drive-test-poster.jpg", w: 464, h: 832, tag: "HARDWARE VIDEO", alt: "The rover drives across a tiled floor.", cap: "Driving under remote control." },
+          { v: "nvsb1-pan-tilt-test.mp4", poster: "nvsb1-pan-tilt-test-poster.jpg", w: 464, h: 832, tag: "HARDWARE VIDEO", alt: "Two blue servos on the rover's deck move a white bracket.", cap: "Camera-mount servos under test." }
+        ] },
+      { id: "nvsb2", title: "Night Vision Spy Bot 2 (Dark Recon)", when: "Apr 2025", ctx: "Team project",
+        role: "My part: circuit and firmware.",
+        text: "The second version of our remote-controlled night-vision spy bot: a four-wheel rover with a camera on a servo mount, an AMB82 Mini camera module, a TF-Luna range sensor and an LED bar. CAD by a teammate. The URDF was shown in RViz only.",
+        limits: ["Autonomy or obstacle avoidance. The report lists them as future work.", "A Gazebo run. The URDF was shown in RViz only.", "Test metrics of any kind."],
+        gallery: [
+          { f: "darkrecon-front.jpg", w: 1200, h: 1600, tag: "HARDWARE PHOTO", alt: "Front of the rover: a camera on an orange bracket above a white and teal body with an LED strip, on four large off-road tyres.", cap: "Front: camera and LED bar." },
+          { f: "darkrecon-rear.jpg", w: 1200, h: 1600, tag: "HARDWARE PHOTO", alt: "Rear of the rover with DARKRECON embossed on the white shell and an orange vented housing above.", cap: "Rear shell." },
+          { f: "darkrecon-top.jpg", w: 1200, h: 1600, tag: "HARDWARE PHOTO", alt: "Top view of the rover on a wooden table.", cap: "From above." },
+          { f: "darkrecon-cad-render.jpg", w: 1320, h: 1033, tag: "CAD", fit: "contain", alt: "CAD render of the rover in the Fusion mobile app.", cap: "Fusion 360 model. CAD by a teammate." },
+          { f: "darkrecon-rviz-urdf.jpg", w: 1003, h: 663, tag: "SIMULATION", fit: "contain", alt: "RViz window showing the rover's URDF model in a single flat colour.", cap: "URDF in RViz. Display only." }
+        ] },
+      { id: "smartcity", title: "AI Smart City", when: "Mar 2025", ctx: "Unplugged 2.0 project, 1st Runner Up",
+        role: "",
+        text: "Our Unplugged 2.0 entry: a tabletop city with working traffic signals, street lamps, a card-operated parking barrier and IR sensor modules on an Arduino, with the layout modelled in Fusion 360.",
+        limits: ["Any camera-based or learned traffic sensing. I have no file that shows it.", "Any cloud or database link.", "Measurements of the traffic or parking logic."],
+        gallery: [
+          { f: "smartcity-model-overview.jpg", w: 1600, h: 1200, tag: "HARDWARE PHOTO", alt: "Top view of a scale city built from pink board: roads with toy cars, buildings, solar panels and wiring.", cap: "The model from above." },
+          { f: "smartcity-model-street.jpg", w: 1200, h: 1600, tag: "HARDWARE PHOTO", alt: "A model road lined with toy cars and lamp posts.", cap: "Main road." },
+          { f: "smartcity-model-parking.jpg", w: 1600, h: 1200, tag: "HARDWARE PHOTO", alt: "Model car park with a barrier arm on a servo, an Arduino board and small sensor modules.", cap: "Car park: barrier servo, Arduino, IR modules." },
+          { f: "smartcity-model-solar-lights.jpg", w: 1600, h: 1200, tag: "HARDWARE PHOTO", alt: "A model street lamp beside a small solar panel and a yellow turbine model.", cap: "Street lamp and solar panel." },
+          { f: "smartcity-model-tank.jpg", w: 1600, h: 1200, tag: "HARDWARE PHOTO", alt: "A blue model water tank, a solar panel and lamp posts on the model.", cap: "Water tank and lamps." },
+          { f: "smartcity-cad-1.jpg", w: 1280, h: 582, tag: "CAD", fit: "contain", alt: "CAD render of the city layout with blue buildings, roads and solar panels.", cap: "Layout in Fusion 360." },
+          { f: "smartcity-cad-2.jpg", w: 1280, h: 582, tag: "CAD", fit: "contain", alt: "A second CAD render of the layout from another corner.", cap: "Second CAD view." },
+          { v: "smartcity-traffic-signals.mp4", poster: "smartcity-traffic-signals-poster.jpg", w: 480, h: 848, tag: "HARDWARE VIDEO", alt: "The camera pans along the model road past lit traffic signals and street lamps.", cap: "Traffic signals and street lamps running." },
+          { v: "smartcity-rfid-gate.mp4", poster: "smartcity-rfid-gate-poster.jpg", w: 848, h: 480, tag: "HARDWARE VIDEO", alt: "A hand holds a card near a reader beside the model car park barrier.", cap: "Card-operated parking barrier." }
+        ] },
+      { id: "visionsync", title: "Vision Sync: hand tracking into a Unity scene", when: "2024", ctx: "Personal project",
+        role: "",
+        text: "MediaPipe hand tracking in Python drives a hand made of spheres in a Unity scene. A cube changes colour when the virtual hand touches it.",
+        limits: ["Latency or accuracy figures.", "Any robot driven by it."],
+        gallery: [
+          { f: "visionsync-hand-landmarks.jpg", w: 608, h: 846, tag: "SCREENSHOT", fit: "contain", alt: "A raised hand in a webcam window with landmark points and connecting lines drawn over it, inside a box labelled Right.", cap: "MediaPipe landmarks from a webcam." },
+          { f: "visionsync-unity-scene.jpg", w: 1600, h: 900, tag: "SIMULATION", fit: "contain", alt: "Unity editor with a cluster of spheres forming a hand above a floor, next to a white cube.", cap: "The landmarks as spheres in Unity." },
+          { f: "visionsync-unity-touch.jpg", w: 1600, h: 900, tag: "SIMULATION", fit: "contain", alt: "The same Unity scene with a cube turned red beside the sphere hand.", cap: "The cube turns red on touch." }
+        ] },
+      { id: "wro", title: "Car for WRO India 2025", when: "5 to 6 Sep 2025", ctx: "Team MAVERICK, Future Engineers category. Participant",
+        role: "",
+        text: "A small car with front ultrasonic sensors and a camera on a ribbon cable, with the chassis modelled in Fusion 360.",
+        limits: ["Lap results. The certificate records participation."],
+        gallery: [
+          { f: "wro-car-on-mat.jpg", w: 1600, h: 1600, tag: "HARDWARE PHOTO", alt: "A small four-wheel car with two ultrasonic sensors at the front, a camera ribbon cable and jumper wires, on a white track mat.", cap: "The car on a track mat." },
+          { f: "wro-cad-chassis.jpg", w: 1320, h: 1205, tag: "CAD", fit: "contain", alt: "CAD model of the car chassis with four wheels and front sensors.", cap: "Chassis model, 'CHASI V1'." },
+          { f: "wro-cad-screen.jpg", w: 1600, h: 900, tag: "CAD", fit: "contain", alt: "A monitor showing the car model in Fusion 360.", cap: "Fusion 360, photographed off the screen." }
+        ] },
+      { id: "wallbot", title: "Magnetic wall-climbing robot", when: "2023", ctx: "",
+        role: "",
+        text: "Photographs of the chassis build. I have no report or test data in my files, so I make no claim here about adhesion or climbing.",
+        limits: ["It climbing a wall."],
+        gallery: [
+          { f: "wallbot-chassis-wheels.jpg", w: 1280, h: 960, tag: "HARDWARE PHOTO", alt: "An orange chassis with a black top panel and four large tyres on a metal bench.", cap: "Chassis and wheels." },
+          { f: "wallbot-chassis-side.jpg", w: 1280, h: 960, tag: "HARDWARE PHOTO", alt: "The same chassis from the side.", cap: "From the side." },
+          { f: "wallbot-chassis-front.jpg", w: 960, h: 1280, tag: "HARDWARE PHOTO", alt: "Front of the chassis without wheels, showing two white strips on the front face.", cap: "Front face." }
+        ] },
+      { id: "extbox", title: "Smart extension box", when: "", ctx: "",
+        role: "",
+        text: "A four-socket extension box with an MCB, four switch positions and USB ports, modelled in Fusion 360. The opened prototype shows a four-channel relay module and a perfboard wired to the sockets.",
+        limits: ["What switches the relays, and from where.", "Any electrical safety test."],
+        gallery: [
+          { f: "extbox-cad-top.jpg", w: 1024, h: 607, tag: "CAD", fit: "contain", alt: "Top face of the box: an MCB, four switch positions S1 to S4, USB ports and four sockets.", cap: "Top face: MCB, S1 to S4, USB, four sockets." },
+          { f: "extbox-cad-iso.jpg", w: 1075, h: 747, tag: "CAD", fit: "contain", alt: "Isometric CAD view of the extension box.", cap: "Isometric view." },
+          { f: "extbox-drawing-dims.jpg", w: 826, h: 586, tag: "DIAGRAM", fit: "contain", alt: "Dimensioned isometric drawing of the box.", cap: "Dimensioned drawing, in mm." },
+          { f: "extbox-prototype-wiring.jpg", w: 828, h: 1109, tag: "HARDWARE PHOTO", alt: "An opened white extension box showing a blue four-channel relay module, a perfboard and wiring.", cap: "Opened prototype: relay module and perfboard." }
+        ] }
+    ],
+    alsoTitle: "Other builds",
+    also: [
+      ["Peltier cooling system for fish delivery", "2025"],
+      ["Temperature-controlled DC fan", "2022"]
+    ]
+  },
+
+  experience: {
+    title: "Experience",
+    scribble: "dates as printed on the certificates, where one exists",
+    list: [
+      { org: "Abyom SpaceTech and Defence", place: "Hyderabad", roles: [["Associate Mechatronics Engineer", "Nov 2026 to present"], ["Graduate Engineer Trainee, Avionics", "Jun to Oct 2026"]],
+        bullets: ["Simulation and control models for HOP ALPHA, an EDF-powered VTVL demonstrator with thrust vector control.", "Contributions to the injector mechanism and torch-igniter control for ABYOKALAM, a reusable cryogenic engine, including pintle-injector flow-control research.", "Coordination with the propulsion, avionics and structures teams."],
+        note: "Described at a generic level, without figures. See the HOP ALPHA sheet." },
+      { org: "National Remote Sensing Centre, ISRO", place: "Outreach Facility, Hyderabad", roles: [["Project intern", "5 Jan to 5 Apr 2026"]],
+        bullets: ["Certified project: 'Autonomous Guided Robot (ROS2 + Ignition Gazebo)'.", "Built it as Mecha Prime: a differential-drive robot in ROS 2 Humble and Ignition Gazebo with Nav2, SLAM Toolbox, AMCL, QR docking and a QR maze solver.", "Designed and assembled a printed prototype. Navigation has only run in simulation."],
+        note: "Dates and project title are from the NRSC certificate." },
+      { org: "Coprotect Venture", place: "", roles: [["Intern, product design", "26 May to 16 Jun 2025"]],
+        bullets: ["Fusion 360 CAD for mechanical parts, including a worm-gear speed reducer.", "An ESP32-based function generator circuit.", "Concept work on a portable clothes dryer."],
+        note: "The certificate confirms the internship and its dates. The task list is my own account." },
+      { org: "Metrix Automations India Pvt. Ltd.", place: "Hyderabad", roles: [["Trainee", "13 to 27 Jul 2023"]],
+        bullets: ["A two-week traineeship with an introduction to PCB design for microcontroller boards."],
+        note: "The company's letter says I was 'exposed to different processes'. It does not mention PCB design." }
+    ]
+  },
+
+  skills: {
+    title: "Skills, drawn as the system they belong to",
+    scribble: "each skill points at the project that proves it",
+    text: "Read it bottom to top like a robot: hardware, control, planning, estimation, perception. The validation column runs alongside all of them. A skill is listed only if a project on this page uses it.",
+    layers: [
+      { name: "Perception", items: [["2D lidar scans", "SpiderX, Mecha Prime"], ["Camera and OpenCV QR decoding", "Mecha Prime"], ["MediaPipe hand tracking", "Vision Sync"], ["Range sensor over serial", "Night Vision Spy Bot 2"]] },
+      { name: "Estimation and mapping", items: [["SLAM Toolbox", "Mecha Prime"], ["AMCL", "Mecha Prime"], ["URDF, xacro, TF2", "SpiderX, Mecha Prime"]] },
+      { name: "Planning and behaviour", items: [["Nav2: planner, controller, behaviour tree", "Mecha Prime"], ["State machines", "Mecha Prime, SpiderX"], ["Gait and trajectory checks", "SpiderX"]] },
+      { name: "Control", items: [["ros2_control", "SpiderX, Mecha Prime"], ["Leg forward and inverse kinematics", "SpiderX"], ["Simulation and control models (MATLAB, Simulink)", "HOP ALPHA"], ["twist_mux arbitration", "Mecha Prime"]] },
+      { name: "Hardware and firmware", items: [["Arduino firmware", "Night Vision Spy Bots"], ["ESP32, Raspberry Pi", "Mecha Prime prototype"], ["Servos and motor drivers", "rovers"], ["Fusion 360, 3D printing", "Mecha Prime chassis"]] }
+    ],
+    side: { name: "Validation", items: [["Frozen scorers and contracts", "SpiderX"], ["Evidence folders with checksums", "SpiderX"], ["pytest suites", "SpiderX"], ["Gazebo Fortress, RViz", "both robots"]] },
+    langs: ["Python", "C++", "Arduino C", "MATLAB and Simulink", "Bash", "Git"],
+    limits: ["Sensor fusion. It is on my resume; no project in my files implements it.", "FEMM and AutoCAD. Also on my resume, also without evidence here.", "PCB design beyond a two-week introduction."]
+  },
+
+  awards: {
+    title: "Awards and certificates",
+    scribble: "worded as the certificate words it",
+    text: "These are typographic cards, not scans: the originals carry signatures and ID numbers. Each card quotes the certificate. A participation certificate is listed as participation.",
+    groups: [
+      { name: "Competitions", items: [
+        { kind: "Achievement", title: "1st Runner Up, Unplugged 2.0", issuer: "Dwarkadas J. Sanghvi College of Engineering", date: "8 to 9 Mar 2025",
+          quote: "Certificate of Achievement. 1st Runner Up of UNPLUGGED 2.0 held at Dwarkadas J. Sanghvi College of Engineering", extra: "Printed under the title: 'A 24-hour hardware hackathon'.",
+          take: "Project: AI Smart City." },
+        { kind: "Merit", title: "2nd place, Line-Follower, ARC '23", issuer: "Hindustan Institute of Technology and Science", date: "30 to 31 Mar 2023",
+          quote: "Certificate of Merit. This is to certify that P. SS Jagadeswar has won 2nd place in the event Line-Follower held during ARC Fest, 2023.",
+          take: "My first competition result, in first year." },
+        { kind: "Participation", title: "WRO India National Championship 2025", issuer: "World Robot Olympiad India (India STEM Foundation)", date: "5 to 6 Sep 2025",
+          quote: "Certificate of Participation is proudly presented to P S S JAGADESWAR, Team MAVERICK, FUTURE ENGINEERS, for Good effort as a Participant in the WRO India National Championship 2025 held in GMR Arena, Hyderabad on 5-6 September, 2025.",
+          take: "Participant. Team MAVERICK, Future Engineers category." },
+        { kind: "Participation", title: "Maker's Arena Hackathon", issuer: "AIC RAISE", date: "21 to 22 Feb 2025",
+          quote: "Certificate of Participation. This is to certify that Jagadeswar has successfully participated in the Maker's Arena Hackathon, organized by AIC RAISE", extra: "The certificate calls it 'this intense 24-hour event' and states no rank.",
+          take: "Participation. No rank is stated." },
+        { kind: "Participation", title: "Innovation Project Expo '23", issuer: "Hindustan Institute of Technology and Science, Chennai", date: "9 to 10 Mar 2023",
+          quote: "Certificate of Participation. Participated in the INNOVATION PROJECT EXPO' 23 held on 09th and 10th March 2023 organized by Hindustan Institute of Technology and Science, Chennai.",
+          take: "Participation. No prize." },
+        { kind: "Participation", title: "ARC '25, prelims round", issuer: "Automation Club, Department of Electronics and Instrumentation Engineering, SRM Institute of Science and Technology", date: "2025",
+          quote: "Certificate of Participation. Has successfully participated in the PRELIMS ROUND of NATIONAL LEVEL AUTOMATION & ROBOTICS CHALLENGE", extra: "The challenge is named ARC'25. No date is printed on the certificate.",
+          take: "Prelims participation." }
+      ] },
+      { name: "Project and internship certificates", items: [
+        { kind: "Project", title: "Autonomous Guided Robot (ROS2 + Ignition Gazebo)", issuer: "National Remote Sensing Centre, ISRO", date: "5 Jan to 5 Apr 2026",
+          quote: "The project entitled 'Autonomous Guided Robot (ROS2 + Ignition Gazebo)' is a record of the Bonafide work done by Sesha Sai Jagadeswar Patnala at National Remote Sensing Centre, and ISRO Hyderabad during the period of 5th Jan 2026 to 5th April 2026.", extra: "Signed by a Scientist/Engineer-SF of the Outreach Facility Division. Dated 6 Apr 2026.",
+          take: "The certified project. I built it as Mecha Prime." },
+        { kind: "Project", title: "Project Closure Certificate", issuer: "Student Project Interface Division, NRSC, ISRO", date: "6 Apr 2026",
+          quote: "The below mentioned student has completed the assigned work successfully at National Remote Sensing Centre, Hyderabad during the period: 05 Jan 2026 to 06 Apr 2026.",
+          take: "Closure of the same project." },
+        { kind: "Internship", title: "Internship programme", issuer: "Coprotect Venture", date: "26 May to 16 Jun 2025",
+          quote: "Certificate of Participation. In recognition of his participation and contributions during the internship program", extra: "The dates are printed on the certificate. No tasks are listed.",
+          take: "Three weeks of product-design work." },
+        { kind: "Internship", title: "Internship as Trainee", issuer: "Metrix Automations India Pvt. Ltd.", date: "13 to 27 Jul 2023",
+          quote: "has successfully completed internship as Trainee from July 13, 2023 to July 27, 2023", extra: "The letter adds that he 'had been exposed to different processes'.",
+          take: "Two weeks, after first year." }
+      ] },
+      { name: "Degree and test", items: [
+        { kind: "Degree", title: "Bachelor of Technology in Mechatronics", issuer: "Hindustan Institute of Technology and Science", date: "Examination of April 2026",
+          quote: "has been admitted to the Degree of Bachelor of Technology in Mechatronics ... and has been placed in the FIRST CLASS WITH DISTINCTION at the Examination held in APRIL 2026.",
+          take: "CGPA 8.75 out of 10. All 165 credits earned." },
+        { kind: "Test", title: "IELTS Academic", issuer: "IELTS", date: "Test date 7 Nov 2026",
+          quote: "Overall Band Score 7.0.",
+          take: "Overall band 7.0." }
+      ] }
+    ]
+  },
+
+  training: {
+    title: "Training",
+    scribble: "short courses. minor, but real.",
+    items: [
+      { kind: "Workshop", title: "Advance IoT with Humanoid Robotics", issuer: "Techobytes Technologies in collaboration with Tinkerer's Lab IIT Hyderabad", date: "24 to 25 Aug 2024",
+        quote: "Certificate of Participation. At IIT Hyderabad organized by Techobytes Technologies in collaboration with Tinkerer's Lab IIT Hyderabad.", extra: "Series: Advanced Techo Workshop Series '24, Level 2. Workshop technology name: Advance IoT with Humanoid Robotics.",
+        take: "A two-day workshop held at IIT Hyderabad. Not an IIT course." },
+      { kind: "Workshop", title: "IoT and low-cost hardware interfacing with MATLAB", issuer: "Department of Mechatronics Engineering & Department of Mathematics, Hindustan Institute of Technology & Science", date: "3 to 5 Apr 2024",
+        quote: "participated in the three days hands-on training workshop on 'IOT & low-cost hardware interfacing with MATLAB'", extra: "The certificate carries the line 'In Association with' above the MathWorks logo.",
+        take: "Three days, hands-on." },
+      { kind: "Course", title: "Computer Integrated Manufacturing", issuer: "NPTEL Online Certification, Indian Institute of Technology Kanpur", date: "Jan to Apr 2025, 12 weeks",
+        quote: "for successfully completing the course Computer Integrated Manufacturing with a consolidated score of 80 %", extra: "Marked 'Elite'. Online assignments 23.41/25, proctored exam 57/75.",
+        take: "Consolidated score 80%." },
+      { kind: "Course", title: "Programming for Everybody (Getting Started with Python)", issuer: "University of Michigan, offered through Coursera", date: "22 Jun 2025",
+        quote: "An online non-credit course authorized by University of Michigan and offered through Coursera.",
+        take: "Completed." },
+      { kind: "Course", title: "AMR Mastery course (ROS 2, Nav2)", issuer: "", date: "", nocert: true,
+        quote: "", take: "The certificate is not in my files." },
+      { kind: "Course", title: "MATLAB Image Processing Onramp", issuer: "", date: "", nocert: true,
+        quote: "", take: "The certificate is not in my files." }
+    ]
+  },
+
+  education: {
+    title: "Education",
+    scribble: "the last three semesters carry it",
+    degree: "B.Tech in Mechatronics",
+    school: "Hindustan Institute of Technology and Science, Chennai",
+    when: "Aug 2022 to Apr 2026",
+    facts: [["CGPA", "8.75 / 10"], ["Class", "First Class with Distinction"], ["Credits", "165 of 165"], ["Final semester GPA", "10.00"], ["IELTS Academic", "Overall band 7.0"]],
+    gpa: [8.73, 8.09, 8.18, 8.59, 8.52, 9.00, 9.41, 10.00],
+    gpaAlt: "Line chart of semester grade point average over eight semesters: 8.73, 8.09, 8.18, 8.59, 8.52, 9.00, 9.41 and 10.00.",
+    courses: [["Principles of Robotics", "A+"], ["Artificial Intelligence for Mechatronics", "A+"], ["Design of Mechatronics System", "A+"], ["Motion Control", "A+"], ["Sensor Signal Processing and Signal Conditioning", "A+"], ["Research Methodology and IPR", "A+"], ["Human Robot Interaction", "S"], ["Project Phase 2 (13 credits)", "S"], ["Machine Vision", "A"], ["Embedded Systems for Mechatronics", "A"]],
+    gradeNote: "S is the top grade on this transcript, then A+, A, B+.",
+    limits: ["Control Systems: B+. My weakest core grade, in the subject my current job is built on.", "Applied Mathematics and Transforms, and Statistics and Data Analytics: B+ each."]
+  },
+
+  reports: {
+    title: "Reports",
+    scribble: "two to download. four on request, with reasons.",
+    list: [
+      { title: "Mecha Prime chassis drawing", meta: "Drawing, 1 page, Apr 2026", file: "assets/reports/mechaprime-chassis-drawing.pdf", note: "Side, front and top views from Fusion 360. Dimensions in mm." },
+      { title: "Night Vision Spy Bot: Design Project 4 report", meta: "29 pages, Apr 2025, team of three", file: "assets/reports/night-vision-spy-bot-2-report-redacted.pdf", note: "Register numbers are blacked out. My part was the circuit and the firmware, which is printed in chapter 5." },
+      { title: "Mecha Prime: Project Phase 2 report", meta: "58 pages, Apr 2026", file: "", note: "On request. It describes work done at NRSC, so I am asking for their consent first." },
+      { title: "Autonomous Guided Robot: NRSC project report", meta: "41 pages, Apr 2026", file: "", note: "On request, for the same reason." },
+      { title: "Quadruped Robot: Project Phase 1 report", meta: "44 pages, Oct 2025, team of three", file: "", note: "On request. It is a team report that predates SpiderX. Where the two differ, the SpiderX ledger is the record." },
+      { title: "Slide decks: Mecha Prime, Night Vision Spy Bot", meta: "2 decks", file: "", note: "On request." }
+    ]
+  },
+
+  resume: {
+    title: "Resume",
+    file: "assets/PSSJ-Resume.pdf"
+  },
+
+  contact: {
+    title: "Contact",
+    scribble: "write to me",
+    text: "I am applying to robotics master's programmes and am open to robotics engineering roles. The fastest way to reach me is email."
+  },
+
+  terminal: {
+    banner: ["pssj-notebook 1.0", "type 'help' and press Enter. Esc closes."],
+    stats: [
+      ["name", "Sesha Sai Jagadeswar Patnala (PSSJ)"],
+      ["role", "Associate Mechatronics Engineer, Abyom SpaceTech and Defence"],
+      ["degree", "B.Tech Mechatronics, CGPA 8.75/10, First Class with Distinction"],
+      ["ielts", "overall band 7.0"],
+      ["spiderx", "12 joints, 8 live sim runs, S4d-M: 111 goals / 0 cancels / +0.30006 m"],
+      ["tests", "1983 automated tests, 0 failures (10 Nov 2026)"],
+      ["mechaprime", "Nav2 + SLAM Toolbox + AMCL + QR docking, simulation; prototype assembled"],
+      ["hardware", "not validated on either robot. this page says so."]
+    ]
+  }
+};
+</script>
+<div id="app"></div>
+<noscript><div style="max-width:60ch;margin:40px auto;padding:0 16px;font:16px/1.6 system-ui,sans-serif"><h1>Sesha Sai Jagadeswar Patnala</h1><p>Validation-first robotics engineer in Hyderabad, India. This notebook needs JavaScript to draw its pages.</p><p>Email: pssjagadeswar22@gmail.com<br><a href="https://github.com/robovision2210">github.com/robovision2210</a><br><a href="https://www.linkedin.com/in/sesha-sai-jagadeswar-patnala-3b6934249/">LinkedIn</a></p></div></noscript>
+<script>
+/* ==========================================================================
+   DRAWINGS. Original inline SVG, generated from a few numbers.
+   SpiderX geometry is read from the repo's URDF audit and frame notes
+   (metres; robot y points forward, z up), so the leg is drawn to scale.
+   ========================================================================== */
+const GEO = {
+  ground: -0.054543,
+  shell: { y0: -0.100, y1: 0.010, z0: 0.040, z1: 0.107 },
+  top: { y0: -0.1935, y1: 0.1035, z0: 0.107, z1: 0.111 },
+  lidar: { y: -0.045, z: 0.111, w: 0.070, h: 0.040 },
+  yMin: -0.2594, yMax: 0.1035,
+  legs: [
+    { servo: { y: 0.0024, z: 0.091 }, H: { y: 0.0161, z: 0.07725 }, T: { y: 0.03885, z: 0.08875 }, K: { y: -0.038932, z: 0.010968 }, tip: { y: 0.042264, z: -0.054543 } },
+    { servo: { y: -0.0924, z: 0.091 }, H: { y: -0.1061, z: 0.07725 }, T: { y: -0.14935, z: 0.08875 }, K: { y: -0.227132, z: 0.010968 }, tip: { y: -0.145936, z: -0.054543 } }
+  ]
+};
+const f1 = n => Math.round(n * 10) / 10;
+const P = (...a) => a.map(f1).join(" ");
+
+/* callout: numbered circle + leader line to a target point */
+function callout(n, nx, ny, tx, ty, extra) {
+  const dx = tx - nx, dy = ty - ny, d = Math.hypot(dx, dy) || 1, sx = nx + dx / d * 14, sy = ny + dy / d * 14;
+  let s = `<path class="ld" pathLength="1" style="--d:${(n * 0.06).toFixed(2)}s" d="M${P(sx, sy)}L${P(tx, ty)}"/><circle cx="${f1(tx)}" cy="${f1(ty)}" r="2.6" fill="var(--ink)"/>`;
+  if (extra) s += `<path class="ld" pathLength="1" style="--d:${(n * 0.06 + .1).toFixed(2)}s" d="M${P(sx, sy)}L${P(extra[0], extra[1])}"/><circle cx="${extra[0]}" cy="${extra[1]}" r="2.6" fill="var(--ink)"/>`;
+  return s + `<g class="cn"><circle cx="${nx}" cy="${ny}" r="13"/><text x="${nx}" y="${ny + 4.6}">${n}</text></g>`;
+}
+function ghosts(list, x, y, w) {
+  return `<g class="ghost" aria-hidden="true">` + list.map((t, i) => `<rect x="${x}" y="${y + i * 30}" width="${w}" height="23" rx="2"/><text x="${x + 9}" y="${y + i * 30 + 15.5}">${t}</text>`).join("") + `</g>`;
+}
+function dimH(x0, x1, y, label) {
+  return `<path class="ln thin" d="M${P(x0, y)}H${f1(x1)}M${P(x0, y - 7)}v14M${P(x1, y - 7)}v14M${P(x0 + 9, y - 4)}l-9 4 9 4M${P(x1 - 9, y - 4)}l9 4-9 4"/><text class="svgt" x="${f1((x0 + x1) / 2)}" y="${y - 7}" text-anchor="middle">${label}</text>`;
+}
+function dimV(x, y0, y1, label) {
+  return `<path class="ln thin" d="M${P(x, y0)}V${f1(y1)}M${P(x - 7, y0)}h14M${P(x - 7, y1)}h14M${P(x - 4, y0 + 9)}l4-9 4 9M${P(x - 4, y1 - 9)}l4 9 4-9"/><text class="svgt" transform="translate(${f1(x + 16)} ${f1((y0 + y1) / 2)}) rotate(-90)" text-anchor="middle">${label}</text>`;
+}
+function hatch(x0, x1, y, step) {
+  let d = ""; for (let x = x0; x < x1; x += step) d += `M${P(x, y)}l-9 11`;
+  return `<path class="ln thin gr" d="${d}"/>`;
+}
+
+/* one SpiderX leg in side view. m maps metres to px. cls adds stagger for the hero. */
+function legSVG(L, m, idx) {
+  const T = m(L.T), K = m(L.K), t = m(L.tip), H = m(L.H), S = m(L.servo), s = m.s;
+  const ux = (K[0] - T[0]), uy = (K[1] - T[1]), ul = Math.hypot(ux, uy), nx = -uy / ul * 9 * s / 1.7, ny = ux / ul * 9 * s / 1.7;
+  const i = n => `style="--i:${idx + n}"`;
+  return [
+    `<path class="ln" pathLength="1" ${i(0)} d="M${P(K[0], K[1])}C${P(K[0] + (t[0] - K[0]) * .45, K[1] + (t[1] - K[1]) * .2, t[0] - 26 * s / 1.7, t[1] - 30 * s / 1.7, t[0] - 4, t[1] - 6)}q${P(8, 2, 10, 6)}h${f1(-30 * s / 1.7)}"/>`,
+    `<path class="ln" pathLength="1" ${i(1)} d="M${P(T[0] + nx, T[1] + ny)}L${P(K[0] + nx, K[1] + ny)}M${P(T[0] - nx, T[1] - ny)}L${P(K[0] - nx, K[1] - ny)}"/>`,
+    `<circle class="ln fillp" pathLength="1" ${i(2)} cx="${f1(K[0])}" cy="${f1(K[1])}" r="${f1(9 * s / 1.7)}"/>`,
+    `<path class="ln fillp" pathLength="1" ${i(3)} d="M${P(Math.min(H[0], T[0]) - 12 * s / 1.7, T[1] - 22 * s / 1.7)}h${f1(Math.abs(T[0] - H[0]) + 34 * s / 1.7)}v${f1(52 * s / 1.7)}h${f1(-(Math.abs(T[0] - H[0]) + 34 * s / 1.7))}z"/>`,
+    `<circle class="ln fillp" pathLength="1" ${i(4)} cx="${f1(T[0])}" cy="${f1(T[1])}" r="${f1(10 * s / 1.7)}"/>`,
+    `<path class="ln fillp" pathLength="1" ${i(5)} d="M${P(S[0] - 20 * s / 1.7, S[1] - 14 * s / 1.7)}h${f1(40 * s / 1.7)}v${f1(40 * s / 1.7)}h${f1(-40 * s / 1.7)}z"/>`
+  ].join("");
+}
+function mapper(x0, yGround, s) {
+  const m = p => [x0 + (p.y - GEO.yMin) * 1000 * s, yGround - (p.z - GEO.ground) * 1000 * s];
+  m.s = s; m.x = y => x0 + (y - GEO.yMin) * 1000 * s; m.y = z => yGround - (z - GEO.ground) * 1000 * s;
+  return m;
+}
+
+/* ------------------------------------------------------------------ hero */
+function heroRobot(alt) {
+  const m = mapper(96, 318, 1.02), g = GEO;
+  const sx0 = m.x(g.shell.y0), sx1 = m.x(g.shell.y1), sy0 = m.y(g.shell.z1), sy1 = m.y(g.shell.z0);
+  const tx0 = m.x(g.top.y0), tx1 = m.x(g.top.y1), ty = m.y(g.top.z1);
+  const lx = m.x(g.lidar.y), ly = m.y(g.lidar.z + g.lidar.h), lw = g.lidar.w * 1020, lh = g.lidar.h * 1020;
+  let arcs = ""; [58, 100, 144].forEach((r, k) => { arcs += `<path class="ln thin dashd gr" pathLength="1" style="--i:${16 + k}" d="M${P(lx - r * .94, ly + lh * .3 - r * .34)}A${r} ${r} 0 0 1 ${P(lx - r * .26, ly + lh * .3 - r * .965)}"/>`; });
+  return `<svg class="asm" viewBox="0 0 560 380" role="img" aria-label="${alt}" id="hero-robot">
+  <g filter="url(#pencil)">
+    <path class="ln thin" pathLength="1" style="--i:0" d="M20 319H540"/>${hatch(30, 540, 321, 26)}
+    <path class="ln fillp" pathLength="1" style="--i:1" d="M${P(sx0, sy0)}H${f1(sx1)}V${f1(sy1)}H${f1(sx0)}z"/>
+    ${legSVG(g.legs[1], m, 2)}${legSVG(g.legs[0], m, 7)}
+    <path class="ln fillp" pathLength="1" style="--i:12" d="M${P(tx0, ty)}H${f1(tx1)}v7H${f1(tx0)}z"/>
+    <path class="ln fillp" pathLength="1" style="--i:14" d="M${P(lx - lw / 2, ly)}h${f1(lw)}v${f1(lh)}h${f1(-lw)}z"/>
+    <ellipse class="ln fillp" pathLength="1" style="--i:15" cx="${f1(lx)}" cy="${f1(ly)}" rx="${f1(lw / 2)}" ry="5"/>
+    ${arcs}
+  </g>
+  <circle id="lidar-origin" cx="${f1(lx)}" cy="${f1(ly + lh * .3)}" r="2.4" fill="var(--ink)"/>
+  ${dimH(m.x(g.yMin), m.x(g.yMax), 358, "363 mm")}
+  <text class="svgh" x="${f1(lx + 34)}" y="${f1(ly - 14)}">lidar (sim)</text>
+  <text class="svgh" x="500" y="304" text-anchor="end">front</text><path class="ln thin" d="M506 297h30m-9-5l9 5-9 5"/>
+</svg>`;
+}
+
+/* ------------------------------------------------------------------ plate 1: SpiderX */
+function plateSpiderX(p) {
+  const m = mapper(190, 548, 1.7), g = GEO, LF = g.legs[0], LR = g.legs[1];
+  const sx0 = m.x(g.shell.y0), sx1 = m.x(g.shell.y1), sy0 = m.y(g.shell.z1), sy1 = m.y(g.shell.z0);
+  const tx0 = m.x(g.top.y0), tx1 = m.x(g.top.y1), tyA = m.y(g.top.z1), tyE = tyA - 84;
+  const lx = m.x(g.lidar.y), lyE = tyE - 96, lw = 119, lh = 46;
+  const T = m(LF.T), K = m(LF.K), tip = m(LF.tip), H = m(LF.H), S = m(LF.servo), Sr = m(LR.servo), Tr = m(LR.T), Kr = m(LR.K), tr = m(LR.tip);
+  const mid = (a, b, f) => [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f];
+  const tm = mid(Tr, Kr, .5), fm = mid(Kr, tr, .52);
+  return `<svg viewBox="0 0 1000 600" role="img" aria-label="${p.alt}">
+  <g filter="url(#pencil)">
+    <path class="ln thin" d="M110 549H900"/>${hatch(120, 900, 551, 30)}
+    <path class="ln fillp" d="M${P(sx0, sy0)}H${f1(sx1)}V${f1(sy1)}H${f1(sx0)}z"/>
+    <path class="ln thin gr" d="M${P(sx0 + 44, sy0 + 44)}H${f1(sx1 - 44)}V${f1(sy1 - 14)}H${f1(sx0 + 44)}z"/>
+    ${legSVG(LR, m, 0)}${legSVG(LF, m, 0)}
+    <path class="ln thin dashd gr" d="M${P(tx0, tyA)}H${f1(tx1)}v7H${f1(tx0)}z"/>
+    <path class="ln thin dashd gr" d="M${P(tx0 + 6, tyE + 9)}V${f1(tyA - 2)}M${P(tx1 - 6, tyE + 9)}V${f1(tyA - 2)}M${P(lx, lyE + lh + 2)}V${f1(tyE - 2)}"/>
+    <path class="ln fillp" d="M${P(tx0, tyE)}H${f1(tx1)}v9H${f1(tx0)}z"/>
+    <path class="ln dashd fillp" d="M${P(lx - lw / 2, lyE)}h${lw}v${lh}h${-lw}z"/><ellipse class="ln dashd fillp" cx="${f1(lx)}" cy="${f1(lyE)}" rx="${lw / 2}" ry="9"/>
+    <path class="ln thin" stroke-dasharray="14 5 2 5" d="M${P(Sr[0] - 60, H[1])}H${f1(H[0] + 92)}"/>
+    <path class="ln thin" d="M${P(H[0] + 70, H[1] - 13)}a13 13 0 1 1 0 26m-6-3l6 3 2-7"/>
+  </g>
+  <text class="svgt" transform="translate(${f1(tm[0] - 21)} ${f1(tm[1] - 15)}) rotate(-45.2)" text-anchor="middle">110.0 mm</text>
+  <text class="svgt" transform="translate(${f1(fm[0] - 20)} ${f1(fm[1] + 24)}) rotate(38.8)" text-anchor="middle">104.3 mm</text>
+  ${dimH(m.x(g.yMin), m.x(g.yMax), 584, "363 mm overall")}
+  ${dimV(948, tyA, 548, "166 mm")}
+  <path class="ln thin" d="M40 520h85M40 514v12M125 514v12"/><text class="svgt" x="82" y="508" text-anchor="middle">50 mm</text>
+  <text class="svgh" x="806" y="250">front</text><path class="ln thin" d="M856 243h36m-9-5l9 5-9 5"/>
+  <text class="svgh" x="${f1(lx + 74)}" y="${f1(lyE + 8)}">dashed = simulation only</text>
+  ${callout(1, 470, 478, (sx0 + sx1) / 2 - 20, sy1 - 6)}
+  ${callout(2, 900, tyE - 34, tx1 - 12, tyE + 2)}
+  ${callout(3, lx - 150, lyE + 4, lx - lw / 2, lyE + 22)}
+  ${callout(4, (sx0 + sx1) / 2, tyE + 44, S[0], S[1] - 22, [Sr[0], Sr[1] - 22])}
+  ${callout(7, 900, 262, T[0] + 10, T[1] - 4)}
+  ${callout(5, 900, 306, H[0] + 94, H[1])}
+  ${callout(6, 900, 350, T[0] + 26, T[1] + 30)}
+  ${callout(8, 900, 402, (T[0] + K[0]) / 2 + 10, (T[1] + K[1]) / 2 - 6)}
+  ${callout(9, 900, 452, K[0] + 10, K[1])}
+  ${callout(10, 900, 502, (K[0] + tip[0]) / 2 + 6, (K[1] + tip[1]) / 2 + 4)}
+  ${ghosts(p.ghosts, 34, 40, 262)}
+</svg>`;
+}
+
+/* ------------------------------------------------------------------ plate 2: Mecha Prime, front view, exploded (2 px = 1 mm) */
+function plateAMR(p) {
+  let tread = ""; for (let y = 412; y < 536; y += 9) tread += `M278 ${y}h28M694 ${y}h28`;
+  return `<svg viewBox="0 0 1000 600" role="img" aria-label="${p.alt}">
+  <g filter="url(#pencil)">
+    <path class="ln thin" d="M150 541H850"/>${hatch(160, 850, 543, 30)}
+    <path class="ln fillp" d="M290 70h420v12H290z"/>
+    <path class="ln thin dashd gr" d="M312 82v48m12-48v48M676 82v48m12-48v48M500 84v36M500 178v22M500 232v16M500 278v28"/>
+    <path class="ln fillp" d="M446 138h108l10 40H436z"/><ellipse class="ln fillp" cx="500" cy="138" rx="54" ry="9"/><path class="ln thin" d="M472 158h56"/>
+    <path class="ln fillp" d="M290 212h420v12H290z"/><path class="ln fillp" d="M432 196h136v16H432z"/>
+    <path class="ln fillp" d="M290 258h420v12H290z"/><path class="ln fillp" d="M330 246h74v12h-74zM556 244h104v14H556z"/>
+    <path class="ln fillp" d="M278 404h28v136h-28zM694 404h28v136h-28z"/><path class="ln thin gr" d="${tread}"/>
+    <path class="ln fillp" d="M306 310h388a16 16 0 0 1 16 16v189H290V326a16 16 0 0 1 16-16z"/>
+    <path class="ln" d="M491 341h18v18h-18z"/><circle class="ln thin" cx="500" cy="350" r="4"/>
+    <circle class="ln" cx="468" cy="440" r="17"/><circle class="ln" cx="532" cy="440" r="17"/><circle class="ln thin" cx="468" cy="440" r="9"/><circle class="ln thin" cx="532" cy="440" r="9"/>
+    <path class="ln thin dashd" d="M590 468h26v18h-26z"/>
+    <path class="ln fillp" d="M338 515a14 14 0 0 0 28 0zM634 515a14 14 0 0 0 28 0z"/>
+  </g>
+  <text class="svgt" x="500" y="208" text-anchor="middle">Raspberry Pi 5</text>
+  <text class="svgt" x="367" y="241" text-anchor="middle">ESP32</text><text class="svgt" x="608" y="239" text-anchor="middle">power</text>
+  ${dimH(290, 710, 578, "210 mm")}
+  ${dimV(770, 310, 515, "102.5 mm")}
+  <text class="svgh" x="60" y="578">141.4 mm tall when assembled</text>
+  ${callout(1, 150, 76, 290, 76)}
+  ${callout(3, 150, 218, 290, 218)}
+  ${callout(4, 150, 264, 290, 264)}
+  ${callout(5, 150, 380, 290, 380)}
+  ${callout(8, 150, 470, 278, 470, [722, 500])}
+  ${callout(2, 880, 150, 562, 160)}
+  ${callout(6, 880, 330, 510, 348)}
+  ${callout(7, 880, 420, 549, 438)}
+  ${callout(10, 880, 468, 616, 477)}
+  ${callout(9, 880, 522, 662, 522)}
+  ${ghosts(p.ghosts, 30, 110, 232).replace(/<g class="ghost"/, '<g class="ghost" transform="translate(0 -84)"')}
+</svg>`;
+}
+
+/* ------------------------------------------------------------------ plate 3: generic gimbal */
+function plateTVC(p) {
+  const blades = [0, 60, 120].map(a => `<path class="ln thin" d="M500 190l${f1(70 * Math.cos(a * Math.PI / 180))} ${f1(20 * Math.sin(a * Math.PI / 180))}M500 190l${f1(-70 * Math.cos(a * Math.PI / 180))} ${f1(-20 * Math.sin(a * Math.PI / 180))}"/>`).join("");
+  return `<svg viewBox="0 0 1000 600" role="img" aria-label="${p.alt}">
+  <g filter="url(#pencil)">
+    <path class="ln fillp" d="M300 66h400v20H300z"/>${hatch(312, 704, 66, 24).replace(/l-9 11/g, "l9 -11")}
+    <path class="ln" d="M290 86V236M710 86V236"/>
+    <ellipse class="ln" cx="500" cy="250" rx="210" ry="62"/>
+    <ellipse class="ln" cx="500" cy="250" rx="150" ry="44"/>
+    <path class="ln thin" stroke-dasharray="14 5 2 5" d="M236 250H764M500 168V342"/>
+    <path class="ln fillp" d="M420 190V400a80 24 0 0 0 160 0V190"/>
+    <ellipse class="ln fillp" cx="500" cy="190" rx="80" ry="24"/>${blades}<ellipse class="ln fillp" cx="500" cy="190" rx="13" ry="5"/>
+    <path class="ln" d="M350 250a150 44 0 0 0 70 37.5M580 287.5a150 44 0 0 0 70-37.5"/>
+    <path class="ln" d="M290 250a210 62 0 0 0 130 57.5M580 307.5a210 62 0 0 0 130-57.5"/>
+    <circle class="ln fillp" cx="290" cy="246" r="9"/><circle class="ln fillp" cx="710" cy="246" r="9"/>
+    <path class="ln" d="M500 294v18"/><circle class="ln fillp" cx="500" cy="303" r="6"/>
+    <path class="ln fillp" d="M352 92l14-2 12 96-14 2z"/><path class="ln" d="M371 187l10 70"/><circle class="ln fillp" cx="360" cy="90" r="6"/><circle class="ln fillp" cx="382" cy="260" r="6"/>
+    <path class="ln fillp" d="M634 90l14 2-10 92-14-2z"/><path class="ln" d="M631 183l-8 106"/><circle class="ln fillp" cx="641" cy="90" r="6"/><circle class="ln fillp" cx="622" cy="292" r="6"/>
+    <path class="ln thin dashd gr" d="M500 424V584M500 424L438 584M500 424L562 584"/>
+    <path class="ln" stroke-width="3" d="M500 424L530 556m-13-10l13 10 7-15"/>
+    <path class="ln thin" d="M500 500a76 76 0 0 0 17-2"/>
+    <path class="ln thin" d="M756 236a16 16 0 1 1 0 28m-6-2l6 2 1-7"/>
+  </g>
+  <text class="svgt b" x="512" y="492">δ</text>
+  <g transform="translate(60 44) rotate(-4)"><rect x="0" y="0" width="196" height="30" fill="none" stroke="var(--ink)" stroke-width="2"/><text class="svgt b" x="98" y="20" text-anchor="middle">GENERIC SCHEMATIC</text></g>
+  ${callout(8, 880, 76, 700, 76)}
+  ${callout(5, 880, 150, 644, 140)}
+  ${callout(1, 880, 340, 580, 340)}
+  ${callout(6, 880, 500, 524, 530)}
+  ${callout(4, 120, 150, 358, 140)}
+  ${callout(3, 120, 218, 303, 229)}
+  ${callout(2, 120, 290, 352, 256)}
+  ${callout(7, 120, 510, 452, 548)}
+  ${ghosts(p.ghosts, 690, 540, 262)}
+</svg>`;
+}
+const PLATES = { "plate-spiderx": plateSpiderX, "plate-amr": plateAMR, "plate-tvc": plateTVC };
+
+/* ------------------------------------------------------------------ Nav2 pipeline */
+function pipelineSVG(cs) {
+  const N = cs.pipeline, w = 106, gap = 16, y = 128, h = 56;
+  let s = "", x = 14;
+  N.forEach((n, i) => {
+    s += `<g class="pn" tabindex="0" role="button" data-k="${n.id}" aria-label="${n.label}: ${n.sub}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/><text x="${x + w / 2}" y="${y + 24}">${n.label}</text><text class="sub" x="${x + w / 2}" y="${y + 42}">${n.sub}</text></g>`;
+    if (i < N.length - 1) s += `<path class="pw" marker-end="url(#arr)" d="M${x + w + 1} ${y + h / 2}h${gap - 4}"/>`;
+    x += w + gap;
+  });
+  const px = i => 14 + i * (w + gap) + w / 2;
+  s += `<g class="pn" tabindex="0" role="button" data-k="bt" aria-label="${cs.pipeSide[0].label}"><rect x="${px(3) - 53}" y="26" width="${px(5) - px(3) + 106}" height="46" rx="3"/><text x="${(px(3) + px(5)) / 2}" y="54">${cs.pipeSide[0].label}</text></g>`;
+  s += `<g class="pn" tabindex="0" role="button" data-k="rec" aria-label="${cs.pipeSide[1].label}"><rect x="${px(6) - 40}" y="26" width="150" height="46" rx="3"/><text x="${px(6) + 35}" y="54">${cs.pipeSide[1].label}</text></g>`;
+  [3, 4, 5].forEach(i => { s += `<path class="pw" marker-end="url(#arr)" d="M${px(i)} 73V${y - 5}"/>`; });
+  s += `<path class="pw" marker-end="url(#arr)" d="M${px(6) - 41} 49H${px(5) + 58}"/>`;
+  s += `<text class="svgh" x="14" y="222">mapping first, then localisation on the saved map</text><path class="ln thin" d="M${px(1)} 200V${y + h + 6}M${px(2)} 200V${y + h + 6}M${px(1)} 200H${px(2)}"/>`;
+  return `<svg viewBox="0 0 990 236" role="group" aria-label="Navigation pipeline: scan, SLAM Toolbox, AMCL, planner, smoother, controller, twist_mux, differential drive, with a behaviour-tree navigator and recoveries above."><defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1l8 4-8 4" fill="none" stroke="var(--ink)" stroke-width="1.6"/></marker></defs>${s}</svg>`;
+}
+
+/* ------------------------------------------------------------------ GPA sparkline */
+function sparkSVG(v, alt) {
+  const x = i => 46 + i * 62, y = g => 150 - (g - 7.8) / (10.1 - 7.8) * 118, pts = v.map((g, i) => P(x(i), y(g))).join(" L");
+  return `<svg viewBox="0 0 530 196" role="img" aria-label="${alt}">
+  <path class="ln thin gr" stroke-dasharray="4 5" d="M30 ${f1(y(8.75))}H500"/><text class="svgt" x="500" y="${f1(y(8.75) - 6)}" text-anchor="end">CGPA 8.75</text>
+  <path d="M${pts}L${P(x(7), 160)}L${P(x(0), 160)}z" fill="var(--ink)" fill-opacity=".07"/>
+  <path class="ln" filter="url(#pencil)" d="M${pts}"/>
+  ${v.map((g, i) => `<circle cx="${x(i)}" cy="${f1(y(g))}" r="${i === 7 ? 6 : 4}" fill="${i === 7 ? "var(--ink)" : "var(--paper)"}" stroke="var(--ink)" stroke-width="1.8"/><text class="svgt${i === 7 ? " b" : ""}" x="${x(i)}" y="${f1(y(g) - 12)}" text-anchor="middle">${g.toFixed(2)}</text><text class="svgt" x="${x(i)}" y="180" text-anchor="middle">S${i + 1}</text>`).join("")}
+  <path class="ln thin" d="M30 160H506"/>
+</svg>`;
+}
+
+/* ==========================================================================
+   RENDER + BEHAVIOUR. Nothing below this line holds copy.
+   ========================================================================== */
+(function () {
+  "use strict";
+  const D = document, R = D.documentElement;
+  R.classList.add("js");
+  if (!C.meta.draft) R.classList.add("nodraft");
+  const $ = (s, r) => (r || D).querySelector(s), $$ = (s, r) => Array.from((r || D).querySelectorAll(s));
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const RM = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const FINE = window.matchMedia && matchMedia("(pointer: fine)").matches;
+  const TODOS = [], GROUPS = {};
+  const todo = (t, where) => { if (!t || !C.meta.draft) return ""; TODOS.push([where, t]); return `<span class="todo"><b>Open item:</b> ${esc(t)}</span>`; };
+  const nf = (v, dec) => dec ? Number(v).toFixed(dec) : Math.round(v).toLocaleString("en-US");
+  const stat = o => `<div class="stat"><span class="num" data-to="${o.to}" data-dec="${o.dec || 0}"><span class="nv">${nf(o.to, o.dec)}</span>${o.unit ? `<small>${esc(o.unit)}</small>` : ""}</span><span class="l">${esc(o.label)}</span><span class="s">${esc(o.sub)}</span></div>`;
+  const ARROW = `<svg class="arrow" viewBox="0 0 54 34" aria-hidden="true"><path d="M3 5c14 2 30 9 40 22m-11-3l11 4 1-12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const PLAY = `<span class="ph-play" aria-hidden="true"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="25" fill="#111" stroke="#f3f3f3" stroke-width="2.5"/><path d="M22 17l16 10-16 10z" fill="#f3f3f3"/></svg></span>`;
+  let sheetNo = 0;
+  const sheet = (id, note, inner) => { sheetNo++; const no = String(sheetNo).padStart(2, "0");
+    return `<section class="sheet" id="${id}" aria-labelledby="${id}-h"><div class="wrap"><div class="sheet-grid"><aside class="rail" aria-hidden="true"><div class="rail-in"><span class="rail-no">Sheet ${no}</span><span class="hand">${esc(note)}</span>${ARROW}</div></aside><div class="body">${inner}</div></div></div></section>`; };
+  const h2 = (id, t, kick) => `${kick ? `<p class="kick">${esc(kick)}</p>` : ""}<h2 class="h2" id="${id}-h">${esc(t)}</h2>`;
+  const kv = rows => `<dl class="kv">${rows.map(r => `<dt>${esc(r[0])}</dt><dd>${Array.isArray(r[1]) ? `<a href="${esc(r[1][1])}" target="_blank" rel="noopener">${esc(r[1][0])}</a>` : esc(r[1])}</dd>`).join("")}</dl>`;
+  const block = (title, inner, id) => `<div class="block"${id ? ` id="${id}"` : ""}>${title ? `<h3 class="h3">${esc(title)}</h3>` : ""}${inner}</div>`;
+
+  /* ---------- galleries ---------- */
+  function gallery(items, gid) {
+    GROUPS[gid] = items;
+    return `<div class="gal" id="${gid}">` + items.map((it, i) => {
+      const rot = (((i * 37 + gid.length * 11) % 7) - 3) * 0.42, vid = !!it.v;
+      const src = vid ? "assets/" + it.poster : "assets/thumbs/" + it.f.replace(/\.png$/, ".jpg");
+      return `<figure class="ph${it.fit === "contain" ? " fitc" : ""}" style="--r:${rot.toFixed(2)}deg"><button type="button" class="ph-btn" data-g="${gid}" data-i="${i}" aria-label="${vid ? "Play video" : "Open image"}: ${esc(it.cap)}"><span class="ph-frame"><img loading="lazy" decoding="async" src="${src}" alt="${esc(it.alt)}" width="${it.w}" height="${it.h}">${vid ? PLAY : ""}<span class="ph-tag">${esc(it.tag)}</span></span><span class="ph-cap">${esc(it.cap)}</span></button></figure>`;
+    }).join("") + `</div>`;
+  }
+  const limits = (items, td, where) => `<div class="limits"><details class="lim sk dash"><summary><span class="stamp none">Not shown</span><span>${items.length} thing${items.length === 1 ? "" : "s"} this ${where === "skills" || where === "education" ? "section" : "sheet"} does not show</span></summary><ul>${items.map(x => `<li>${esc(x)}</li>`).join("")}</ul>${todo(td, where)}</details></div>`;
+  const lessons = (ls, td, where) => `<ol class="lessons">${ls.map(l => `<li><b>${esc(l[0])}</b> ${esc(l[1])}</li>`).join("")}</ol>${todo(td, where)}`;
+  const plate = p => `<figure class="plate" id="${p.id}"><div class="plate-frame sk"><div class="plate-scroll scroller">${PLATES[p.id](p)}</div><div class="plate-tb"><div><b>${esc(p.title)}</b>${esc(p.sub)}</div><div>PSSJ<br>${esc(C.meta.updated)}</div></div></div><p class="hand pan-hint" aria-hidden="true">drag sideways to see the whole plate</p><ol class="legend">${p.legend.map(l => `<li><code>${esc(l[0])}</code>${esc(l[1])}</li>`).join("")}</ol></figure>`;
+  const vtable = cs => `<div class="tw scroller"><table class="vt"><caption>${esc(cs.tableNote)}</caption><thead><tr><th scope="col">Item</th><th scope="col">How it was checked</th><th scope="col">Result</th><th scope="col">Evidence</th></tr></thead><tbody>${cs.table.map(r => `<tr><td>${esc(r[0])}</td><td data-l="How it was checked">${esc(r[1])}</td><td data-l="Result">${esc(r[2])}</td><td data-l="Evidence">${r[3].length ? r[3].map(e => `<a href="${esc(e[1])}"${e[1][0] === "#" ? "" : ' target="_blank" rel="noopener"'}>${esc(e[0])}</a>`).join("") : "Held by my employer"}</td></tr>`).join("")}</tbody></table></div>`;
+
+  /* ---------- ledger ---------- */
+  const STLAB = { pass: "Pass", fail: "Fail, kept", inc: "Inconclusive, kept", mixed: "Mixed", partial: "Partial", none: "Not run" };
+  function ledger(cs) {
+    const L = cs.ledger, n = f => L.filter(f).length;
+    const kept = e => ["fail", "inc", "mixed", "partial"].includes(e.status);
+    return `<p>${esc(cs.ledgerIntro)}</p>
+    <div class="led-ctl" role="group" aria-label="Filter the ledger"><span class="lab">Show</span>
+      <button type="button" class="tbtn" data-f="all" aria-pressed="true">All ${L.length}</button>
+      <button type="button" class="tbtn" data-f="pass" aria-pressed="false">Passed ${n(e => e.status === "pass")}</button>
+      <button type="button" class="tbtn" data-f="kept" aria-pressed="false">Failed or partial, kept ${n(kept)}</button>
+      <button type="button" class="tbtn" data-f="none" aria-pressed="false">Not run ${n(e => e.status === "none")}</button>
+      <span class="lab" style="margin-left:10px">Rows</span>
+      <button type="button" class="tbtn" data-x="1">Open all</button><button type="button" class="tbtn" data-x="0">Close all</button></div>
+    <div class="led-list">${L.map(e => `<details class="led" data-st="${e.status}" data-kept="${kept(e) ? 1 : 0}"${e.id === cs.ledgerOpen ? " open" : ""}><summary><span class="led-id">${esc(e.id)}</span><span class="led-nm">${esc(e.name)}${e.when ? `<small>${esc(e.when)}</small>` : ""}</span><span class="stamp ${e.status}">${esc(e.stamp || STLAB[e.status])}</span></summary>
+      <div class="led-body"><dl><dt>Criterion</dt><dd>${esc(e.criterion)}</dd><dt>Result</dt><dd class="res">${esc(e.result)}</dd><dt>Does not show</dt><dd>${esc(e.limit)}</dd><dt>Evidence</dt><dd class="ev">${e.ev.length ? e.ev.map(v => `<a href="${SX + v[1]}" target="_blank" rel="noopener">${esc(v[0])}</a>`).join("") : "None yet."}</dd></dl></div></details>`).join("")}</div>
+    <p class="key" aria-hidden="true"><span><span class="stamp pass">Pass</span>scorer passed</span><span><span class="stamp fail">Fail</span>frozen verdict kept</span><span><span class="stamp inc">Dashed</span>inconclusive or mixed</span><span><span class="stamp partial">Dotted</span>part done</span><span><span class="stamp none">Grey</span>not run</span></p>`;
+  }
+
+  /* ---------- sections ---------- */
+  function hero() {
+    const h = C.hero;
+    return `<section class="hero" id="top" aria-labelledby="hero-h"><div class="beam" aria-hidden="true"><b></b><i></i></div><div class="wrap hero-in">
+      <span class="hand hero-note">${esc(h.note)}</span>
+      <h1 id="hero-h"><span class="l1">${esc(h.line1)}</span><span class="l2">${esc(h.line2)}</span></h1>
+      <div class="hero-grid"><div>
+      <p class="hero-sub">${esc(h.sub).replace(esc(C.meta.name), "<b>" + esc(C.meta.name) + "</b>")}</p>
+      <div class="hero-cta">${h.cta.map((c, i) => `<a class="btn${i ? "" : " solid"}" href="${c[0]}">${esc(c[1])}</a>`).join("")}<button type="button" class="btn only-screen" data-term>Open the terminal <kbd aria-hidden="true">/</kbd></button></div>
+    </div><div class="hero-art">${heroRobot(esc(h.robotAlt))}<span class="hand scr" aria-hidden="true">${esc(h.scribble)}</span></div></div>
+    <div class="hero-stats">${h.stats.map(stat).join("")}</div></div></section>`;
+  }
+  function about() {
+    const a = C.about;
+    return sheet("about", a.scribble, `${h2("about", a.title)}<div class="two"><div><p class="lead">${esc(a.text)}</p>${kv(a.facts)}</div>
+      <div class="note sk"><h3 class="h3">${esc(a.researchTitle)}</h3><p>${esc(a.research)}</p><ul class="chips">${a.interests.map(i => `<li>${esc(i)}</li>`).join("")}</ul>${todo(a.researchTodo, "About")}</div></div>`);
+  }
+  function caseStudy(cs) {
+    let s = h2(cs.id, cs.title, cs.kicker) + kv(cs.meta);
+    s += block("The problem", `<p class="lead">${esc(cs.problem)}</p>`);
+    if (cs.built) s += block(cs.builtTitle, `<p>${esc(cs.built)}</p>${todo(cs.builtTodo, cs.id)}`);
+    if (cs.work) s += block("What I do there", `<ul class="worklist">${cs.work.map(w => `<li>${esc(w)}</li>`).join("")}</ul>`);
+    s += block("", plate(cs.plate));
+    if (cs.pipeline) s += block(cs.pipeTitle, `<p>${esc(cs.pipeText)} Mapping and localisation run in separate sessions.</p><div class="pipe-stage sk scroller">${pipelineSVG(cs)}</div><div class="pipe-info sk" id="pipe-info" role="status" aria-live="polite"><b>Select a node</b><p>Each box is one process in the stack.</p></div><p class="pipe-ctl" style="margin-top:12px"><button type="button" class="tbtn" id="pipe-replay">Light it up again</button></p>`);
+    if (cs.ledger) s += block("The validation ledger", ledger(cs), "ledger");
+    if (cs.table) s += block(cs.tableTitle, vtable(cs));
+    if (cs.numbers && cs.numbers.length) s += block("Verified numbers", `<div class="nums">${cs.numbers.map(stat).join("")}</div>`);
+    if (cs.ikTitle) s += block(cs.ikTitle, `<p>${esc(cs.ikText)}</p><div class="ik"><div class="ik-stage sk"><svg id="ik-svg" viewBox="0 0 680 520" role="group" aria-label="Side view of one robot leg with a draggable foot target."></svg></div><div class="ik-read sk"><dl><dt>target y</dt><dd id="ik-y"></dd><dt>target z</dt><dd id="ik-z"></dd><dt>lf_thigh_joint</dt><dd id="ik-q1"></dd><dt>lf_foot_joint</dt><dd id="ik-q2"></dd></dl><span class="st" id="ik-st" role="status" aria-live="polite"></span><p style="margin:12px 0 0"><button type="button" class="tbtn" id="ik-reset">Back to neutral</button></p><p class="ik-hint" style="margin:12px 0 0;color:var(--faint);font-size:12px">Drag the circle, or focus it and use the arrow keys. Shift moves 10 mm. Lengths: thigh 110.0 mm, foot 104.3 mm.</p></div></div>`);
+    if (cs.gallery) s += block(cs.galleryTitle, gallery(cs.gallery, cs.id + "-gallery") + (cs.demoNote ? `<div class="demo-note sk dash"><p style="margin:0">${esc(cs.demoNote)}</p>${todo(cs.demoTodo, cs.id)}</div>` : ""));
+    s += block("Not shown", limits(cs.limits, cs.limitsTodo, cs.id).replace('class="limits"', 'class="limits" style="margin-top:0"'));
+    s += block("Lessons", lessons(cs.lessons, cs.lessonsTodo, cs.id));
+    return sheet(cs.id, cs.scribble, s);
+  }
+  function projects() {
+    const p = C.projects;
+    return sheet("projects", p.scribble, h2("projects", p.title) + p.list.map(x => `<article class="proj" id="p-${x.id}"><div class="proj-h"><h3 class="h3" style="margin:0">${esc(x.title)}</h3><span class="mono">${esc(x.when || "")}</span><span class="mono">${esc(x.ctx || "")}</span></div>${todo(x.whenTodo, x.title)}
+      <p>${x.role ? `<span class="role">${esc(x.role)}</span> ` : ""}${esc(x.text)}</p>${todo(x.roleTodo, x.title)}${todo(x.todo, x.title)}${gallery(x.gallery, "g-" + x.id)}${limits(x.limits, "", "")}</article>`).join("") +
+      `<div class="also sk dash"><h3 class="h3" style="margin:0">${esc(p.alsoTitle)}</h3><ul>${p.also.map(a => `<li>${esc(a[0])} (${esc(a[1])})</li>`).join("")}</ul>${todo(p.alsoTodo, "More projects")}</div>`);
+  }
+  function experience() {
+    const x = C.experience;
+    return sheet("experience", x.scribble, h2("experience", x.title) + x.list.map(e => `<div class="xp"><div><h3>${esc(e.org)}</h3>${e.place ? `<span class="pl mono">${esc(e.place)}</span>` : ""}${e.roles.map(r => `<span class="rl">${esc(r[0])}<span>${esc(r[1])}</span></span>`).join("")}</div><div><ul>${e.bullets.map(b => `<li>${esc(b)}</li>`).join("")}</ul><p class="xn">${esc(e.note)}</p>${todo(e.todo, e.org)}</div></div>`).join(""));
+  }
+  function skills() {
+    const s = C.skills, items = a => `<ul class="sk-items">${a.map(i => `<li>${esc(i[0])}<span>${esc(i[1])}</span></li>`).join("")}</ul>`;
+    return sheet("skills", s.scribble, h2("skills", s.title) + `<p>${esc(s.text)}</p><div class="stack"><div class="layers">${s.layers.map(l => `<div class="layer sk"><h3>${esc(l.name)}</h3>${items(l.items)}</div>`).join("")}</div><div class="side sk dash"><h3>${esc(s.side.name)}</h3>${items(s.side.items)}</div></div><ul class="chips" aria-label="Languages and tools">${s.langs.map(l => `<li>${esc(l)}</li>`).join("")}</ul>${limits(s.limits, "", "skills")}`);
+  }
+  const CERTS = [];
+  function certCard(c) {
+    const i = CERTS.push(c) - 1, rot = ((i * 29) % 5 - 2) * 0.5, win = c.kind === "Achievement" || c.kind === "Merit";
+    return `<button type="button" class="cert" style="--r:${rot}deg" data-g="certs" data-i="${i}" aria-label="Open certificate card: ${esc(c.title)}"><span class="ck${win ? " win" : ""}${c.nocert ? " nc" : ""}">${esc(c.nocert ? "No certificate on file" : c.kind)}</span><b>${esc(c.title)}</b><span class="ci">${esc(c.issuer)}</span>${c.date ? `<span class="ci cd">${esc(c.date)}</span>` : ""}<span class="ct">${esc(c.take)}</span></button>`;
+  }
+  function awards() {
+    const a = C.awards;
+    return sheet("awards", a.scribble, h2("awards", a.title) + `<p>${esc(a.text)}</p>` + a.groups.map(g => `<h3 class="grp">${esc(g.name)}</h3><div class="cards">${g.items.map(c => certCard(c) ).join("")}</div>${g.items.map(c => todo(c.todo, c.title)).join("")}`).join(""));
+  }
+  function training() {
+    const t = C.training;
+    return sheet("training", t.scribble, h2("training", t.title) + `<div class="cards">${t.items.map(certCard).join("")}</div>${t.items.map(c => todo(c.todo, c.title)).join("")}`);
+  }
+  function education() {
+    const e = C.education;
+    return sheet("education", e.scribble, h2("education", e.title) + `<div class="edu"><div><h3 class="h3">${esc(e.degree)}</h3><p>${esc(e.school)}<br><span class="mono">${esc(e.when)}</span></p>${kv(e.facts)}</div><div class="spark sk">${sparkSVG(e.gpa, esc(e.gpaAlt))}</div></div>
+      ${block("Courses closest to robotics", `<ul class="courses">${e.courses.map(c => `<li><span>${esc(c[0])}</span><b>${esc(c[1])}</b></li>`).join("")}</ul><p class="mono" style="color:var(--faint);margin-top:12px">${esc(e.gradeNote)}</p>${limits(e.limits, "", "education")}`)}`);
+  }
+  function reports() {
+    const r = C.reports;
+    return sheet("reports", r.scribble, h2("reports", r.title) + `<div class="reps">${r.list.map(x => `<div class="rep sk${x.file ? "" : " dash"}"><h3>${esc(x.title)}</h3><span class="mono">${esc(x.meta)}</span><p>${esc(x.note)}</p>${x.file ? `<a class="btn" href="${esc(x.file)}" target="_blank" rel="noopener">Open the PDF</a>` : `<span class="stamp none hold">On request</span>`}</div>`).join("")}</div>${todo(r.todo, "Reports")}`);
+  }
+  function contact() {
+    const m = C.meta, r = C.resume, c = C.contact;
+    return sheet("contact", c.scribble, h2("contact", c.title) + `<p class="lead">${esc(c.text)}</p>${todo(c.todo, "Contact")}<div class="contact">
+      <div class="ct-card sk"><span class="mono">Email</span><a href="mailto:${esc(m.email)}">${esc(m.email)}</a></div>
+      <div class="ct-card sk"><span class="mono">GitHub</span><a href="${esc(m.github)}" target="_blank" rel="noopener">github.com/robovision2210</a></div>
+      <div class="ct-card sk"><span class="mono">LinkedIn</span><a href="${esc(m.linkedin)}" target="_blank" rel="noopener">Sesha Sai Jagadeswar Patnala</a></div>
+      <div class="ct-card sk dash" id="resume" hidden><span class="mono">${esc(r.title)}</span><a href="${esc(r.file)}" target="_blank" rel="noopener">Download the PDF</a></div></div>`);
+  }
+  function openItems() {
+    return sheet("open-items", "for the owner only", h2("open-items", "Open items") + `<p>These chips appear only while <span class="mono">meta.draft</span> is true. Each one is a fact I could not confirm from your files.</p><ol>${TODOS.map(t => `<li>${t[0] ? `<b>${esc(t[0])}:</b> ` : ""}${esc(t[1])}</li>`).join("")}</ol>`);
+  }
+
+  /* ---------- assemble ---------- */
+  const parts = [hero(), about()].concat(C.cases.map(caseStudy), [projects(), experience(), skills(), awards(), training(), education(), reports(), contact()]);
+  if (C.meta.draft && TODOS.length) parts.push(openItems());
+  const m = C.meta;
+  $("#app").innerHTML = `
+  ${C.meta.draft && TODOS.length ? `<div class="draft only-draft"><div class="wrap">Draft copy with ${TODOS.length} open items for the owner. <a href="#open-items">See the list</a>. Set meta.draft to false to hide them all.</div></div>` : ""}
+  <header class="top"><div class="wrap top-in">
+    <a class="mark" href="#top" aria-label="${esc(m.short)}, back to the top"><svg viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 30h40v11H12z"/><path d="M19 41l-7 10 8 5M45 41l-7 10 8 5"/><path d="M26 30v-7h12v7"/></g></svg>${esc(m.short)}</a>
+    <button type="button" class="tbtn menu-btn" aria-expanded="false" aria-controls="sheets">Sheets</button>
+    <nav class="sheets" id="sheets" aria-label="Sections">${C.nav.map(n => `<a href="#${n[0]}">${esc(n[1])}</a>`).join("")}</nav>
+    <div class="tools">
+      <button type="button" class="tbtn" id="limits-btn" aria-pressed="false" title="Open every Not shown box and mark the plates"><span class="lbl">Honest </span>limits: <span id="limits-state">off</span></button>
+      <button type="button" class="tbtn" id="theme-btn" aria-label="Flip between dark and light paper">&#9680;<span class="lbl" id="theme-lbl"> Light paper</span></button>
+      <button type="button" class="tbtn term" data-term aria-label="Open the terminal">Terminal <kbd>/</kbd></button>
+    </div></div></header>
+  <main id="main">${parts.join("")}</main>
+  <footer class="foot"><div class="wrap">${esc(m.name)}, ${esc(m.place)}. Last updated ${esc(m.updated)}.<br>One HTML file, no trackers, no frameworks. Photographs are greyscale until you point at them. Press Ctrl+P for a black-and-white PDF.</div></footer>`;
+
+  /* ---------- resume slot: stays hidden until assets/PSSJ-Resume.pdf exists ---------- */
+  (function resumeSlot() {
+    const el = $("#resume"), f = C.resume && C.resume.file; if (!el || !f || !window.fetch) return;
+    fetch(f, { method: "HEAD", cache: "no-store" }).then(r => { if (r.ok && !/text\/html/.test(r.headers.get("content-type") || "")) el.hidden = false; }).catch(() => {});
+  })();
+
+  /* ---------- theme, with a page flip ---------- */
+  const themeBtn = $("#theme-btn"), themeLbl = $("#theme-lbl");
+  function setTheme(t, flip) {
+    if (flip && !RM) {
+      const cs = getComputedStyle(R), f = D.createElement("div");
+      f.className = "flip"; f.style.setProperty("--fp", cs.getPropertyValue("--paper")); f.style.setProperty("--fg", cs.getPropertyValue("--grid2"));
+      D.body.appendChild(f); f.addEventListener("animationend", () => f.remove());
+    }
+    R.setAttribute("data-theme", t); themeLbl.textContent = t === "light" ? " Dark paper" : " Light paper";
+    const mc = $('meta[name="theme-color"]'); if (mc) mc.setAttribute("content", t === "light" ? "#f4f4f4" : "#111111");
+    try { localStorage.setItem("pssj-theme", t); } catch (e) { /* storage can be unavailable */ }
+  }
+  let saved = null; try { saved = localStorage.getItem("pssj-theme"); } catch (e) { /* ignore */ }
+  setTheme(saved || R.getAttribute("data-theme") || "dark", false);
+  themeBtn.addEventListener("click", () => setTheme(R.getAttribute("data-theme") === "light" ? "dark" : "light", true));
+
+  /* ---------- honest limits ---------- */
+  const limBtn = $("#limits-btn"), limState = $("#limits-state");
+  limBtn.addEventListener("click", () => {
+    const on = !R.classList.contains("limits-on");
+    R.classList.toggle("limits-on", on); limBtn.setAttribute("aria-pressed", on); limState.textContent = on ? "on" : "off";
+    $$("details.lim").forEach(d => { d.open = on; });
+  });
+
+  /* ---------- menu, nav highlight ---------- */
+  const menuBtn = $(".menu-btn"), nav = $("#sheets");
+  menuBtn.addEventListener("click", () => { const o = nav.classList.toggle("open"); menuBtn.setAttribute("aria-expanded", o); });
+  nav.addEventListener("click", e => { if (e.target.tagName === "A") { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); } });
+
+  /* ---------- ledger controls ---------- */
+  const led = $("#ledger");
+  if (led) led.addEventListener("click", e => {
+    const b = e.target.closest("button"); if (!b) return;
+    if (b.dataset.f) {
+      $$("[data-f]", led).forEach(x => x.setAttribute("aria-pressed", x === b));
+      $$("details.led", led).forEach(d => { const f = b.dataset.f; d.hidden = !(f === "all" || (f === "kept" ? d.dataset.kept === "1" : d.dataset.st === f)); });
+    } else if (b.dataset.x) $$("details.led", led).forEach(d => { if (!d.hidden) d.open = b.dataset.x === "1"; });
+  });
+
+  /* ---------- in-view effects: underlines, plate leaders, counters, pipeline ---------- */
+  let PRINTING = false;
+  function count(el) {
+    if (RM || el.dataset.done) return; el.dataset.done = 1;
+    const to = parseFloat(el.dataset.to), dec = parseInt(el.dataset.dec, 10), nv = $(".nv", el), t0 = performance.now(), dur = 1100;
+    (function step(t) { const k = PRINTING ? 1 : Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3); nv.textContent = nf(to * e, dec); if (k < 1) requestAnimationFrame(step); else nv.textContent = nf(to, dec); })(t0);
+  }
+  let pipeRun = () => {};
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (!en.isIntersecting) return; const t = en.target; t.classList.add("in");
+      if (t.classList.contains("num")) count(t);
+      if (t.classList.contains("pipe-stage")) pipeRun();
+      io.unobserve(t);
+    }), { threshold: 0.25 });
+    $$(".h2,.plate,.num,.pipe-stage").forEach(el => io.observe(el));
+    const spy = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) $$("a", nav).forEach(a => { if (a.getAttribute("href") === "#" + en.target.id) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); }); }), { rootMargin: "-45% 0px -50% 0px" });
+    $$("main section.sheet").forEach(s => spy.observe(s));
+  } else $$(".h2,.plate").forEach(el => el.classList.add("in"));
+
+  /* ---------- scroll-driven margin line ---------- */
+  const sp = D.createElement("div"); sp.className = "scrollpath"; sp.setAttribute("aria-hidden", "true");
+  sp.innerHTML = `<svg viewBox="0 0 14 1000" preserveAspectRatio="none"><path pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M7 0C3 60 11 130 7 200S3 330 8 400 11 540 6 610 4 740 8 810 10 930 7 1000"/></svg>`;
+  D.body.appendChild(sp); const spPath = $("path", sp); let ticking = false;
+  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(() => { const max = D.documentElement.scrollHeight - innerHeight; spPath.setAttribute("stroke-dashoffset", (1 - (max > 0 ? scrollY / max : 0)).toFixed(4)); ticking = false; }); }
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+
+  /* ---------- hero: lidar sweep that inks the headline ---------- */
+  function sweep() {
+    const heroEl = $(".hero"), h1 = $(".hero h1"), beam = $(".beam"), org = $("#lidar-origin");
+    if (RM || !heroEl || !org) return;
+    const hr = heroEl.getBoundingClientRect(), o = org.getBoundingClientRect(), tr = h1.getBoundingClientRect();
+    const ox = o.left + o.width / 2 - hr.left, oy = o.top + o.height / 2 - hr.top, mx = ox - (tr.left - hr.left), my = oy - (tr.top - hr.top);
+    const line = $("i", beam), glow = $("b", beam); beam.style.left = ox + "px"; beam.style.top = oy + "px"; beam.classList.add("on");
+    const t0 = performance.now(), dur = 2400;
+    (function frame(t) {
+      const k = Math.min(1, (t - t0) / dur), th = 360 * (k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2), a = -th;
+      line.style.transform = `rotate(${a}deg)`;
+      glow.style.background = `conic-gradient(from ${a}deg, color-mix(in srgb, var(--ink) 20%, transparent) 0deg, transparent 46deg, transparent 360deg)`;
+      const mk = `conic-gradient(from ${a}deg at ${mx}px ${my}px, #000 0deg ${th}deg, rgba(0,0,0,.16) ${th}deg 360deg)`;
+      h1.style.webkitMaskImage = mk; h1.style.maskImage = mk;
+      if (k < 1) requestAnimationFrame(frame); else { h1.style.webkitMaskImage = ""; h1.style.maskImage = ""; beam.classList.remove("on"); }
+    })(t0);
+  }
+  (D.fonts && D.fonts.ready ? D.fonts.ready : Promise.resolve()).then(() => setTimeout(sweep, 350));
+
+  /* ---------- images are lazy, then fetched a few at a time when the browser is idle,
+     so a print or a save-to-PDF never shows empty frames ---------- */
+  (function idleImages() {
+    const conn = navigator.connection; if (conn && conn.saveData) return;
+    const idle = window.requestIdleCallback || (f => setTimeout(f, 300));
+    const go = () => { const q = $$('img[loading="lazy"]'); let i = 0;
+      (function batch() { for (let n = 0; n < 4 && i < q.length; n++, i++) q[i].loading = "eager"; if (i < q.length) idle(batch, { timeout: 1500 }); })(); };
+    if (D.readyState === "complete") idle(go, { timeout: 4000 }); else addEventListener("load", () => idle(go, { timeout: 4000 }));
+  })();
+
+  /* ---------- wide diagrams: reachable by keyboard only when they really scroll ---------- */
+  function markScrollers() { $$(".scroller").forEach(el => { if (el.scrollWidth > el.clientWidth + 2) { el.tabIndex = 0; el.setAttribute("role", "group"); if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", "Wide diagram, scroll sideways"); } else { el.removeAttribute("tabindex"); el.removeAttribute("role"); el.removeAttribute("aria-label"); } }); }
+  markScrollers(); let rsz = null; addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(markScrollers, 200); });
+
+  /* ---------- magnetic buttons ---------- */
+  if (FINE && !RM) $$(".btn").forEach(b => {
+    b.addEventListener("pointermove", e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${((e.clientX - r.left) / r.width - .5) * 10}px,${((e.clientY - r.top) / r.height - .5) * 8}px)`; });
+    b.addEventListener("pointerleave", () => { b.style.transform = ""; });
+  });
+
+  /* ---------- Nav2 pipeline ---------- */
+  const pstage = $(".pipe-stage");
+  if (pstage) {
+    const cs = C.cases.find(c => c.pipeline), info = $("#pipe-info"), nodes = $$(".pn", pstage), all = cs.pipeline.concat(cs.pipeSide);
+    const show = k => { const n = all.find(x => x.id === k); if (n) info.innerHTML = `<b>${esc(n.label)}${n.sub ? " (" + esc(n.sub) + ")" : ""}</b><p>${esc(n.info)}</p>`; };
+    nodes.forEach(g => { ["click", "focus", "pointerenter"].forEach(ev => g.addEventListener(ev, () => show(g.dataset.k))); g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); show(g.dataset.k); } }); });
+    let timer = null;
+    pipeRun = () => {
+      if (RM) return; clearTimeout(timer); nodes.forEach(n => n.classList.remove("lit")); let i = 0; const seq = cs.pipeline.map(n => n.id);
+      (function next() { if (i >= seq.length) { timer = setTimeout(() => nodes.forEach(n => n.classList.remove("lit")), 1600); return; } const g = nodes.find(n => n.dataset.k === seq[i]); g.classList.add("lit"); show(seq[i]); i++; timer = setTimeout(next, 620); })();
+    };
+    $("#pipe-replay").addEventListener("click", () => pipeRun());
+  }
+
+  /* ---------- 2-link leg IK (front-left leg, numbers from the URDF) ---------- */
+  (function ikWidget() {
+    const svg = $("#ik-svg"); if (!svg) return;
+    const K = { l1: 0.110, l2: 0.10433, v1: [-0.077782, -0.077782], v2: [0.081196, -0.065511], q1: [-0.610865, 0.785398], q2: [-0.698132, 0.436332] };
+    const rot = (v, a) => [v[0] * Math.cos(a) - v[1] * Math.sin(a), v[0] * Math.sin(a) + v[1] * Math.cos(a)];
+    const fk = (q1, q2) => { const s = rot(K.v2, q2); return { k: rot(K.v1, -q1), t: rot([K.v1[0] + s[0], K.v1[1] + s[1]], -q1) }; };
+    const th0 = Math.atan2(K.v2[1], K.v2[0]) - Math.atan2(K.v1[1], K.v1[0]);
+    function ik(p) {
+      const r = Math.hypot(p[0], p[1]);
+      if (r > K.l1 + K.l2 - 1e-6 || r < Math.abs(K.l1 - K.l2) + 1e-6) return { ok: false, why: "out of reach" };
+      const g = Math.acos((K.l1 * K.l1 + K.l2 * K.l2 - r * r) / (2 * K.l1 * K.l2)), q2 = (Math.PI - g) - th0, s = rot(K.v2, q2), w = [K.v1[0] + s[0], K.v1[1] + s[1]];
+      let a = Math.atan2(p[1], p[0]) - Math.atan2(w[1], w[0]); a = Math.atan2(Math.sin(a), Math.cos(a)); const q1 = -a;
+      const bad = q1 < K.q1[0] || q1 > K.q1[1] ? "lf_thigh_joint limit" : q2 < K.q2[0] || q2 > K.q2[1] ? "lf_foot_joint limit" : "";
+      return { ok: !bad, why: bad, q1, q2 };
+    }
+    const S = 1850, OX = 410, OY = 84, X = y => OX + y * S, Y = z => OY - z * S;
+    const edge = []; const N = 26;
+    for (let i = 0; i <= N; i++) edge.push(fk(K.q1[0] + (K.q1[1] - K.q1[0]) * i / N, K.q2[0]).t);
+    for (let i = 0; i <= N; i++) edge.push(fk(K.q1[1], K.q2[0] + (K.q2[1] - K.q2[0]) * i / N).t);
+    for (let i = N; i >= 0; i--) edge.push(fk(K.q1[0] + (K.q1[1] - K.q1[0]) * i / N, K.q2[1]).t);
+    for (let i = N; i >= 0; i--) edge.push(fk(K.q1[0], K.q2[0] + (K.q2[1] - K.q2[0]) * i / N).t);
+    const n0 = fk(0, 0), floor = Y(n0.t[1]);
+    svg.innerHTML = `<g filter="url(#pencil)"><path class="ln thin" d="M30 ${floor}H650"/>${hatch(40, 650, floor + 2, 30)}
+      <path class="ln thin dashd gr" d="M${OX - 200} ${OY - 50}h300v100h-300z"/></g>
+      <text class="svgh" x="${OX - 194}" y="${OY - 58}">body</text><text class="svgh" x="560" y="${floor - 10}">front</text><path class="ln thin" d="M610 ${floor - 17}h30m-9-5l9 5-9 5"/>
+      <path class="ik-ws" d="M${edge.map(p => P(X(p[0]), Y(p[1]))).join("L")}z"/><text class="svgt" x="${X(-0.2)}" y="${Y(-0.222)}">shaded: reachable inside the joint limits</text>
+      <path class="ik-leg" id="ik-thigh"/><path class="ik-leg" id="ik-shank"/>
+      <circle cx="${OX}" cy="${OY}" r="11" class="ln fillp"/><circle id="ik-knee" r="9" class="ln fillp"/>
+      <circle class="ik-tgt" id="ik-tgt" r="13" tabindex="0" role="slider" aria-label="Foot target" aria-valuetext=""/>`;
+    const thigh = $("#ik-thigh"), shank = $("#ik-shank"), knee = $("#ik-knee"), tgt = $("#ik-tgt"), out = { y: $("#ik-y"), z: $("#ik-z"), q1: $("#ik-q1"), q2: $("#ik-q2"), st: $("#ik-st") };
+    const sg = (v, d) => (v >= 0 ? "+" : "\u2212") + Math.abs(v).toFixed(d);
+    let p = n0.t.slice();
+    function draw() {
+      const r = ik(p); let pose = null;
+      if (r.q1 !== undefined) pose = fk(r.q1, r.q2);
+      tgt.setAttribute("cx", X(p[0])); tgt.setAttribute("cy", Y(p[1]));
+      if (pose) {
+        thigh.setAttribute("d", `M${OX} ${OY}L${P(X(pose.k[0]), Y(pose.k[1]))}`); shank.setAttribute("d", `M${P(X(pose.k[0]), Y(pose.k[1]))}L${P(X(pose.t[0]), Y(pose.t[1]))}`);
+        knee.setAttribute("cx", X(pose.k[0])); knee.setAttribute("cy", Y(pose.k[1]));
+        [thigh, shank].forEach(e => e.classList.toggle("bad", !r.ok));
+      } else[thigh, shank].forEach(e => e.classList.add("bad"));
+      out.y.textContent = sg(p[0] * 1000, 1) + " mm"; out.z.textContent = sg(p[1] * 1000, 1) + " mm";
+      const fmt = q => q === undefined ? "none" : `${sg(q, 3)} rad (${sg(q * 180 / Math.PI, 1)}°)`;
+      out.q1.textContent = fmt(r.q1); out.q2.textContent = fmt(r.q2);
+      out.st.textContent = r.ok ? "SOLVED: inside both joint limits" : "REFUSED: " + r.why;
+      tgt.setAttribute("aria-valuetext", `y ${(p[0] * 1000).toFixed(0)} millimetres, z ${(p[1] * 1000).toFixed(0)} millimetres, ${r.ok ? "solved" : "refused, " + r.why}`);
+    }
+    const toLocal = e => { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse()); return [Math.max(-0.21, Math.min(0.14, (q.x - OX) / S)), Math.max(-0.225, Math.min(0.04, (OY - q.y) / S))]; };
+    let drag = false;
+    svg.addEventListener("pointerdown", e => { drag = true; svg.setPointerCapture(e.pointerId); p = toLocal(e); draw(); e.preventDefault(); });
+    svg.addEventListener("pointermove", e => { if (drag) { p = toLocal(e); draw(); } });
+    ["pointerup", "pointercancel"].forEach(ev => svg.addEventListener(ev, () => { drag = false; }));
+    tgt.addEventListener("keydown", e => { const d = (e.shiftKey ? 10 : 2) / 1000, mv = { ArrowLeft: [-d, 0], ArrowRight: [d, 0], ArrowUp: [0, d], ArrowDown: [0, -d] }[e.key]; if (!mv) return; e.preventDefault(); p = [Math.max(-0.21, Math.min(0.14, p[0] + mv[0])), Math.max(-0.225, Math.min(0.04, p[1] + mv[1]))]; draw(); });
+    $("#ik-reset").addEventListener("click", () => { p = n0.t.slice(); draw(); });
+    draw();
+  })();
+
+  /* ---------- lightbox ---------- */
+  GROUPS.certs = CERTS;
+  const lb = D.createElement("div"); lb.id = "lb"; lb.hidden = true; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Viewer");
+  lb.innerHTML = `<div class="lb-bar"><span id="lb-n"></span><span class="sp"></span><button type="button" class="lb-b" id="lb-p" aria-label="Previous">&#8592; Prev</button><button type="button" class="lb-b" id="lb-x" aria-label="Next">Next &#8594;</button><button type="button" class="lb-b" id="lb-c">Close (Esc)</button></div><div class="lb-stage" id="lb-s"></div><div class="lb-cap" id="lb-t"></div>`;
+  D.body.appendChild(lb);
+  let cur = null, lastFocus = null;
+  function lbShow() {
+    const g = GROUPS[cur.g], it = g[cur.i], st = $("#lb-s"), cap = $("#lb-t");
+    if (it.v) st.innerHTML = `<video controls playsinline preload="metadata" poster="assets/${esc(it.poster)}" aria-label="${esc(it.alt)}"><source src="assets/${esc(it.v)}" type="video/mp4"></video>`;
+    else if (it.f) st.innerHTML = `<img src="assets/${esc(it.f)}" alt="${esc(it.alt)}" width="${it.w}" height="${it.h}">`;
+    else st.innerHTML = `<div class="bigcert"><span class="ck">${esc(it.nocert ? "No certificate on file" : it.kind)}</span><h3>${esc(it.title)}</h3><p class="ci">${esc(it.issuer)}${it.date ? `<br>${esc(it.date)}` : ""}</p>${it.quote ? `<blockquote>${esc(it.quote)}</blockquote>` : ""}${it.extra ? `<p class="ex">${esc(it.extra)}</p>` : ""}<p class="ct">${esc(it.take)}</p></div>`;
+    cap.innerHTML = it.tag ? `<span class="t">${esc(it.tag)}</span><span class="c">${esc(it.cap)}</span>` : `<span class="c">Typed from the certificate. The scan stays private.</span>`;
+    $("#lb-n").textContent = `${cur.i + 1} of ${g.length}`; $("#lb-p").disabled = cur.i === 0; $("#lb-x").disabled = cur.i === g.length - 1;
+  }
+  function lbOpen(g, i) { lastFocus = D.activeElement; cur = { g, i }; lb.hidden = false; D.body.style.overflow = "hidden"; lbShow(); $("#lb-c").focus(); }
+  function lbClose() { lb.hidden = true; $("#lb-s").innerHTML = ""; D.body.style.overflow = ""; if (lastFocus) lastFocus.focus(); cur = null; }
+  const lbStep = d => { if (!cur) return; const n = cur.i + d; if (n >= 0 && n < GROUPS[cur.g].length) { cur.i = n; lbShow(); } };
+  D.addEventListener("click", e => { const b = e.target.closest("[data-g]"); if (b) lbOpen(b.dataset.g, parseInt(b.dataset.i, 10)); });
+  $("#lb-c").addEventListener("click", lbClose); $("#lb-p").addEventListener("click", () => lbStep(-1)); $("#lb-x").addEventListener("click", () => lbStep(1));
+  lb.addEventListener("click", e => { if (e.target === lb || e.target.id === "lb-s") lbClose(); });
+
+  /* ---------- terminal ---------- */
+  const term = D.createElement("div"); term.id = "term"; term.hidden = true; term.setAttribute("role", "dialog"); term.setAttribute("aria-label", "Terminal");
+  term.innerHTML = `<div class="term-h"><b>pssj@notebook</b><span style="flex:1"></span><button type="button" class="lb-b" id="term-c">Close (Esc)</button></div><div class="term-o" id="term-o" role="log" aria-live="polite"></div><form class="term-f" id="term-f" autocomplete="off"><label for="term-i">pssj@notebook:~$</label><input id="term-i" type="text" spellcheck="false" autocapitalize="off" aria-label="Terminal command"></form>`;
+  D.body.appendChild(term);
+  const to = $("#term-o"), ti = $("#term-i"), hist = []; let hi = 0, termFocus = null;
+  const say = (html, cls) => { const d = D.createElement("div"); if (cls) d.className = cls; d.innerHTML = html; to.appendChild(d); to.scrollTop = to.scrollHeight; };
+  const link = (u, t) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t || u)}</a>`;
+  const pad = (s, n) => (s + " ".repeat(n)).slice(0, n);
+  const CMD = {
+    help: () => say(["help      this list", "whoami    who wrote this notebook", "stats     verified numbers", "links     email, GitHub, LinkedIn, repos", "ledger    SpiderX milestones and verdicts", "limits    what this page does not show", "open X    jump to a sheet: " + C.nav.map(n => n[0]).concat(["ledger"]).join(", "), "theme     flip the paper", "clear     clear the screen", "exit      close the terminal"].map(esc).join("\n")),
+    whoami: () => say(esc(`${m.name} (${m.short})\n${m.role}\n${m.place}`)),
+    stats: () => say(C.terminal.stats.map(s => esc(pad(s[0], 12) + s[1])).join("\n")),
+    links: () => say([["email", "mailto:" + m.email, m.email], ["github", m.github], ["linkedin", m.linkedin], ["spiderx", SX], ["mechaprime", MPR]].map(l => esc(pad(l[0], 12)) + link(l[1], l[2])).join("\n")),
+    ledger: () => say(C.cases[0].ledger.map(e => esc(pad(e.id, 8) + pad((e.stamp || STLAB[e.status]).toUpperCase(), 26) + e.name)).join("\n")),
+    limits: () => say(C.cases.map(c => esc(c.id.toUpperCase()) + "\n" + c.limits.map(l => "  - " + esc(l)).join("\n")).join("\n")),
+    theme: () => { themeBtn.click(); say("paper flipped."); },
+    clear: () => { to.innerHTML = ""; },
+    exit: () => termClose()
+  };
+  function run(line) {
+    const a = line.trim().split(/\s+/), c = (a[0] || "").toLowerCase(); say(esc("$ " + line), "dim"); if (!c) return;
+    if (c === "open") { const k = (a[1] || "").toLowerCase(), t = /^[a-z][a-z0-9-]*$/.test(k) && D.getElementById(k); if (t) { termClose(); t.scrollIntoView({ behavior: RM ? "auto" : "smooth", block: "start" }); } else say(esc("no such sheet. try: " + C.nav.map(n => n[0]).concat(["ledger"]).join(", "))); return; }
+    if (CMD[c]) CMD[c](); else say(esc(`${c}: command not found. type 'help'.`));
+  }
+  function termOpen() { if (!term.hidden) return; termFocus = D.activeElement; term.hidden = false; if (!to.childNodes.length) { say(C.terminal.banner.map(esc).join("\n"), "dim"); CMD.stats(); CMD.links(); } setTimeout(() => ti.focus(), 30); }
+  function termClose() { term.hidden = true; if (termFocus && termFocus.focus) termFocus.focus(); }
+  $("#term-f").addEventListener("submit", e => { e.preventDefault(); const v = ti.value; ti.value = ""; if (v.trim()) { hist.push(v); hi = hist.length; } run(v); });
+  ti.addEventListener("keydown", e => { if (e.key === "ArrowUp" && hi > 0) { hi--; ti.value = hist[hi]; e.preventDefault(); } else if (e.key === "ArrowDown") { hi = Math.min(hist.length, hi + 1); ti.value = hist[hi] || ""; e.preventDefault(); } });
+  $("#term-c").addEventListener("click", termClose);
+  $$("[data-term]").forEach(b => b.addEventListener("click", termOpen));
+
+  /* ---------- keys ---------- */
+  D.addEventListener("keydown", e => {
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target.tagName || "")) || e.target.isContentEditable;
+    if (e.key === "Escape") { if (cur) lbClose(); else if (!term.hidden) termClose(); return; }
+    if (cur) {
+      if (e.key === "ArrowLeft") lbStep(-1); else if (e.key === "ArrowRight") lbStep(1);
+      else if (e.key === "Tab") { const f = $$("button:not([disabled]),video", lb); if (!f.length) return; const first = f[0], last = f[f.length - 1]; if (e.shiftKey && D.activeElement === first) { last.focus(); e.preventDefault(); } else if (!e.shiftKey && D.activeElement === last) { first.focus(); e.preventDefault(); } }
+      return;
+    }
+    if (e.key === "/" && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); termOpen(); }
+  });
+
+  /* ---------- print: open every folded box, then put them back ---------- */
+  let wasOpen = [];
+  addEventListener("beforeprint", () => { PRINTING = true; $$(".num").forEach(n => { $(".nv", n).textContent = nf(parseFloat(n.dataset.to), parseInt(n.dataset.dec, 10)); }); $$("img[loading]").forEach(i => { i.loading = "eager"; }); wasOpen = $$("details").map(d => [d, d.open, d.hidden]); wasOpen.forEach(x => { x[0].open = true; x[0].hidden = false; }); });
+  addEventListener("afterprint", () => { PRINTING = false; wasOpen.forEach(x => { x[0].open = x[1]; x[0].hidden = x[2]; }); });
+})();
+</script>
+</body>
+</html>
